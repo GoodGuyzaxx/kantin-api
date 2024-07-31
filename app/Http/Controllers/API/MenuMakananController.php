@@ -19,7 +19,8 @@ class MenuMakananController extends Controller
     {
         $menu = MenuMakanan::all();
         return response([
-            'message' => "Berhasil mengambil data menu makanan",
+            'success' => true,
+            'message' => "Berhasil mengambil data",
             'data' => MenuMakananResource::collection($menu)
         ], 200);
     }
@@ -54,7 +55,7 @@ class MenuMakananController extends Controller
         return response([
             'message' => 'Berhasil Menambah Menu Makanan',
             'data' => new MenuMakananResource($listMakanan)
-            ], 200);
+            ], 201);
     }
 
     /**
@@ -68,16 +69,17 @@ class MenuMakananController extends Controller
 //            'data' => new MenuMakananResource($post),
 //        ]);
 
-
         try {
             $port = MenuMakanan::findORFail($id);
             return response()->json([
+                'success' => true,
                 'message' => 'Berhasil mengambil data',
                 'data' => new MenuMakananResource($port)
             ],200);
         }catch (ModelNotFoundException $e){
             return Response([
 //                $e -> getMessage(),
+                'success' => false,
                 'message' => "Data Tidak ditemukan"
             ], 404);
         }
@@ -90,24 +92,13 @@ class MenuMakananController extends Controller
     {
         $dataPost = $request->all();
         $post = MenuMakanan::findOrfail($id);
-        $image = null;
-
-//        $validator = Validator::make($dataPost, [
-//            'nama_menu' => 'required',
-//            'deskripsi' => 'required',
-//            'harga' => 'required',
-//            'stock' => 'required',
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return response(['error'=> $validator -> errors()]);
-//        }
+        $image = $post->gambar;
 
         if ($request -> file){
             $fileName = $this->generateRandomString();
             $extension = $request->file->extension();
             $image = $fileName.'.'.$extension;
-            Storage::putFileAs('gambar',$request->file,$image);
+            Storage::putFileAs('public/gambar',$request->file,$image);
         }
         $dataPost['gambar'] = $image;
         $post->update($dataPost);
@@ -122,12 +113,19 @@ class MenuMakananController extends Controller
      */
     public function destroy($id)
     {
-        $post = MenuMakanan::findOrFail($id);
-        $post->delete();
-        return response([
-            'message' => 'Berhasil Menghapus Menu Makanan',
-            'data' => new MenuMakananResource($post)
-        ], 200);
+        $post = MenuMakanan::destroy($id);
+        if ($post) {
+            return response([
+                'success' => true,
+                'message' => 'Berhasil Menghapus Menu Makanan',
+                'data' => new MenuMakananResource($post)
+            ], 200);
+        } else {
+            return response([
+                'success' => false,
+                'message' => "Data Tidak ditemukan"
+            ]);
+        }
     }
 
     function generateRandomString($length = 40) {
