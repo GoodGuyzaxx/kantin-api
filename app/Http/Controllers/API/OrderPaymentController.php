@@ -14,10 +14,12 @@ class OrderPaymentController extends Controller
     public function buy(Request $request){
 
         $validator = Validator::make($request->all(), [
-           'name' => 'required',
-           'email' =>  'required|email',
-            'total' => 'required|int',
-            'id_makanan' => 'required',
+           'name'           => 'required',
+           'email'          => 'required|email',
+            'total_makanan' => 'required|int',
+            'id_makanan'    => 'required',
+            'total_minuman'  => 'required|int',
+            'id_minuman'     => 'required',
 //            'bank' => 'required|in:bca,bni',
         ]);
 
@@ -37,12 +39,25 @@ class OrderPaymentController extends Controller
             ],422);
         }
 
+        $minuman=DB::table('menu_minumen')
+            ->where('id', $request->get('id_minuman'))
+            ->first();
+        if (!$minuman){
+            return response()->json([
+                'message' => 'minuman tidak ditemukan',
+                'data'  => ['minuman Tidak ada di database']
+            ],422);
+        }
+
         try {
             DB::beginTransaction();
             $serverKey = config('midtrans.key');
 
             $orderID = Str::uuid()->toString();
-            $grossAmount = $makanan->harga * $request->total + 500;
+            $totalMakanan = $makanan->harga* $request->total_makanan;
+            $totalMinuman = $minuman->harga * $request->total_minuman;
+
+            $grossAmount = ($totalMakanan + $totalMinuman) + 500;
 
 
              $response = Http::withBasicAuth($serverKey, '')
@@ -74,6 +89,7 @@ class OrderPaymentController extends Controller
                 'nama' => $request->name,
                 'email' => $request->email,
                 'id_makanan' => $makanan->id,
+                'id_minuman' => $minuman->id,
                 'total_amount' => $grossAmount,
                 'status' => 'Pending',
                 'created_at' => now(),
@@ -81,7 +97,11 @@ class OrderPaymentController extends Controller
 
              //TODO Penurangan Stock Pada Menu Makan dan Jga Concuring Ketika APlikasi dilakukan Secara Bersamaan
             DB::table('menu_makanans')->where('id', $makanan->id)->update([
-                'stock' => $makanan->stock - $request->total,
+                'stock' => $makanan->stock - $request->total_makanan,
+            ]);
+
+            DB::table('menu_minumen')->where('id', $minuman->id)->update([
+                'stock' => $minuman->stock - $request->total_minuman,
             ]);
 
 
