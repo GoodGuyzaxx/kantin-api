@@ -44,6 +44,11 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
+        ],
+        'konsumen' => [
+            'driver' => 'session',
+            'provider' => 'konsumens',
+            'hash' => false,
         ]
     ],
 
@@ -69,6 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'konsumens' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Konsumen::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
