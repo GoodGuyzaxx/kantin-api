@@ -52,10 +52,10 @@ class HandlerPaymentNotifController extends Controller
         }
 
         if($transactionStatus == 'settlement') {
-           $order->status = 'PAID';
+           $order->status = 'Paid';
            $order->save();
         }else if($transactionStatus == 'expire') {
-            $order->status = 'EXPIRED';
+            $order->status = 'Expaired';
             $order->save();
         }
 
