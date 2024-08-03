@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_minuman',255);
             $table->string('deskripsi');
-            $table->float('harga');
+            $table->unsignedBigInteger('harga');
             $table->string('gambar',255)->nullable();
             $table->integer('stock');
             $table->timestamps();
