@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_konsumen')->autoIncrement();
             $table->string('nama_konsumen');
             $table->string('email')->unique();
-            $table->string('password');
             $table->string('no_telp');
+            $table->string('password');
             $table->timestamps();
         });
     }
