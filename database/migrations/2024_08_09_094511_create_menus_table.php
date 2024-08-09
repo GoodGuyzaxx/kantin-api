@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('harga');
             $table->string('gambar',255)->nullable();
             $table->integer('stock');
-            $table->enum('category',['makanan','minuman']);
+            $table->enum('kategori',['makanan','minuman']);
             $table->timestamps();
         });
     }
