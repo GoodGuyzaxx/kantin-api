@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProyekController;
 use App\Http\Controllers\API\KonsumenController;
+use App\Http\Controllers\API\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,9 @@ Route::get('register', [AuthController::class, 'index']);
 Route::post('konsumen/register', [KonsumenController::class, 'register']);
 Route::post('konsumen/login', [KonsumenController::class, 'login']) -> name('login');
 
-Route::apiResource('proyek', ProyekController::class) -> middleware('auth:api');
+Route::post('admin/login', [AdminController::class, 'login']) ->name('login');
+Route::post('admin/register', [AdminController::class, 'register']);
+
 
 Route::post('order/buy', [\App\Http\Controllers\API\OrderPaymentController::class, 'buy']);
 Route::post('midtrans/notif-hook',[\App\Http\Controllers\HandlerPaymentNotifController::class,'__invoke']);
@@ -42,10 +45,16 @@ Route::post('midtrans/notif-hook',[\App\Http\Controllers\HandlerPaymentNotifCont
  * -> middleware('auth:api')
  * */
 //Route::apiResource('makananlist' , MenuMakananController::class)
-Route::post('makanan' , [MenuMakananController::class, 'store']) -> middleware('auth:api');
+Route::post('makanan' , [MenuMakananController::class, 'store']);
 Route::get('makanan' , [MenuMakananController::class, 'index']);
 Route::get('makanan/{id}' , [MenuMakananController::class, 'show']);
-Route::patch('makanan/{id}' , [MenuMakananController::class, 'update']) -> middleware('auth:api');
-Route::delete('makanan/{id}' , [MenuMakananController::class, 'destroy'])-> middleware('auth:api');
+Route::patch('makanan/{id}' , [MenuMakananController::class, 'update']) ;
+Route::delete('makanan/{id}' , [MenuMakananController::class, 'destroy']);
+Route::get('makanan/kantin/{id}',[MenuMakananController::class, 'indexById']);
 
 Route::apiResource('minuman', MenuMinumanController::class);
+Route::get('minuman/kantin/{id}', [MenuMinumanController::class, 'indexById']);
+
+
+//Example Project
+//Route::apiResource('proyek', ProyekController::class) -> middleware('auth:api');

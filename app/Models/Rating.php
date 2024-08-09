@@ -5,21 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuMinuman extends Model
+class Rating extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'id_kantin',
-        'nama_minuman',
-        'deskripsi',
-        'harga',
-        'gambar',
-        'stock'
+        'id_konsumen',
+        'id_makanan',
+        'id_minuman',
+        'rating'
     ];
 
     protected $casts = [
-        'harga' => 'float',
-        'stock' => 'int'
+        'rating' => 'int'
     ];
 }

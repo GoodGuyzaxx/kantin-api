@@ -11,6 +11,7 @@ class MenuMakanan extends Model
 
     //Mengijikin tabel yang di isi
     protected $fillable = [
+        'id_kantin',
         'nama_menu',
         'deskripsi',
         'harga',

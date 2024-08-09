@@ -17,11 +17,12 @@ class MenuMinumanResource extends JsonResource
     {
 //        return parent::toArray($request);
         return [
-          'id_menu_minuman' => $this->id,
+            'id_minuman' => $this->id_minuman,
+            'id_kantin' => $this->id_kantin,
             'nama_minuman' => $this->nama_minuman,
             'deskripsi' => $this->deskripsi,
             'harga' => $this->harga,
-            'gambar' => 'http://127.0.0.1:8000/storage/gambar/'.$this->gambar,
+            'gambar' => env('STORAGE_LOCATION').'storage/gambar/'.$this->gambar,
             'stock' => $this->stock,
             'created_at' => Carbon::parse($this->created_at)-> format("Y-m-d H:i:s"),
             'updated_at' => Carbon::parse($this->updated_at)-> format("Y-m-d H:i:s"),

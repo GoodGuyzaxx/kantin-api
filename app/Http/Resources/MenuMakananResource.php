@@ -16,11 +16,12 @@ class MenuMakananResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id_menu_makanan' => $this->id,
+            'id_makanan' => $this->id_makanan,
+            'id_kantin' =>$this->id_kantin,
             'nama_menu' => $this->nama_menu,
             'deskripsi' => $this->deskripsi,
             'harga' => $this->harga,
-            'gambar' => 'http://127.0.0.1:8000/storage/gambar/'.$this->gambar,
+            'gambar' => env('STORAGE_LOCATION').'storage/gambar/'.$this->gambar,
             'stock' => $this->stock,
             'created_at' => Carbon::parse($this->created_at)-> format("Y-m-d H:i:s"),
             'updated_at' => Carbon::parse($this->updated_at)-> format("Y-m-d H:i:s"),

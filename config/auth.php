@@ -49,6 +49,11 @@ return [
             'driver' => 'session',
             'provider' => 'konsumens',
             'hash' => false,
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+            'hash' => false,
         ]
     ],
 
@@ -78,6 +83,11 @@ return [
         'konsumens' => [
             'driver' => 'eloquent',
             'model' => App\Models\Konsumen::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ]
 
         // 'users' => [

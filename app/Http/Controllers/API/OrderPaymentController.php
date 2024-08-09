@@ -15,6 +15,7 @@ class OrderPaymentController extends Controller
 
         $validator = Validator::make($request->all(), [
            'name'           => 'required',
+           'nama_kantin'    => 'required',
            'email'          => 'required|email',
             'total_makanan' => 'required|int',
             'id_makanan'    => 'required',
@@ -30,9 +31,9 @@ class OrderPaymentController extends Controller
         }
 
         $makanan=DB::table('menu_makanans')
-            ->where('id', $request->get('id_makanan'))
+            ->where('id_makanan', $request->get('id_makanan'))
             ->first();
-        if (!$makanan){
+        if (!$makanan || !isset($makanan->id_makanan)) {
             return response()->json([
                 'message' => 'Makanan tidak ditemukan',
                 'data'  => ['Makanan Tidak ada di database']
@@ -40,21 +41,21 @@ class OrderPaymentController extends Controller
         }
 
         $minuman=DB::table('menu_minumen')
-            ->where('id', $request->get('id_minuman'))
+            ->where('id_minuman', $request->get('id_minuman'))
             ->first();
-        if (!$minuman){
+        if (!$minuman || !isset($minuman->id_minuman)){
             return response()->json([
                 'message' => 'minuman tidak ditemukan',
                 'data'  => ['minuman Tidak ada di database']
             ],422);
-        }
+        } elseif ($minuman->stock == 0 )
 
         try {
             DB::beginTransaction();
             $serverKey = config('midtrans.key');
 
             $orderID = Str::uuid()->toString();
-            $totalMakanan = $makanan->harga* $request->total_makanan;
+            $totalMakanan = $makanan->harga * $request->total_makanan;
             $totalMinuman = $minuman->harga * $request->total_minuman;
 
             $grossAmount = ($totalMakanan + $totalMinuman) + 500;
@@ -67,9 +68,11 @@ class OrderPaymentController extends Controller
                          'order_id'     => $orderID,
                          'gross_amount' => $grossAmount
                      ],
-//                     'bank_transfer' => [
-//                         'bank' => $request->bank
-//                     ]
+                     'customer_details' => [
+                         'first_name' => $request->nama_kantin,
+                         'last_name' => $request->name,
+                         'email' => $request->email
+                     ],
                  ]);
 
              if ($response->failed()) {
@@ -88,19 +91,19 @@ class OrderPaymentController extends Controller
                 'id' => $orderID,
                 'nama' => $request->name,
                 'email' => $request->email,
-                'id_makanan' => $makanan->id,
-                'id_minuman' => $minuman->id,
+                'id_makanan' => $makanan->id_makanan,
+                'id_minuman' => $minuman->id_minuman,
                 'total_amount' => $grossAmount,
                 'status' => 'Pending',
                 'created_at' => now(),
             ]);
 
              //TODO Penurangan Stock Pada Menu Makan dan Jga Concuring Ketika APlikasi dilakukan Secara Bersamaan
-            DB::table('menu_makanans')->where('id', $makanan->id)->update([
+            DB::table('menu_makanans')->where('id_makanan', $makanan->id_makanan)->update([
                 'stock' => $makanan->stock - $request->total_makanan,
             ]);
 
-            DB::table('menu_minumen')->where('id', $minuman->id)->update([
+            DB::table('menu_minumen')->where('id_minuman', $minuman->id_minuman)->update([
                 'stock' => $minuman->stock - $request->total_minuman,
             ]);
 

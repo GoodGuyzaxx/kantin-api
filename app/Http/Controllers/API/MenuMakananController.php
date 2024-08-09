@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MenuMakananResource;
 use App\Models\MenuMakanan;
+use Couchbase\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,6 +33,7 @@ class MenuMakananController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
+            'id_kantin' => 'required',
             'nama_menu' => 'required',
             'deskripsi' => 'required',
             'harga' => 'required',
@@ -61,7 +63,7 @@ class MenuMakananController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id_makanan)
     {
 //        $post = MenuMakanan::findOrFail($id);
 //        return response()->json([
@@ -70,11 +72,17 @@ class MenuMakananController extends Controller
 //        ]);
 
         try {
-            $port = MenuMakanan::findORFail($id);
+            $port = MenuMakanan::where('id_makanan',$id_makanan)->get();
+            if ($port->isEMpty()){
+                return Response([
+                    'success' => false,
+                    'message' => "Data Tidak ditemukan"
+                ], 404);
+            }
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil mengambil data',
-                'data' => new MenuMakananResource($port)
+                'data' => MenuMakananResource::collection($port)
             ],200);
         }catch (ModelNotFoundException $e){
             return Response([
@@ -126,6 +134,24 @@ class MenuMakananController extends Controller
                 'message' => "Data Tidak ditemukan"
             ]);
         }
+    }
+
+    public function indexById($id)
+    {
+        $menu = MenuMakanan::where('id_kantin',$id)->get();
+        if ($menu->isEmpty()){
+            return Response([
+                'success' => false,
+                'message' => "Data Kantin tidak ditemukan",
+            ]);
+        }
+
+        return response([
+            'success' => true,
+            'message' => "Berhasil mengambil data",
+            'data' => MenuMakananResource::collection($menu)
+        ], 200);
+
     }
 
     function generateRandomString($length = 40) {

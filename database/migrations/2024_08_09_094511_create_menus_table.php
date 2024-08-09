@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_minumen', function (Blueprint $table) {
-            $table->id('id_minuman');
+        Schema::create('menus', function (Blueprint $table) {
+            $table->id('id_menu');
             $table->foreignId('id_kantin');
-            $table->string('nama_minuman',255);
+            $table->string('nama_menu',255);
             $table->string('deskripsi');
             $table->unsignedBigInteger('harga');
             $table->string('gambar',255)->nullable();
             $table->integer('stock');
+            $table->enum('category',['makanan','minuman']);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_minumen');
+        Schema::dropIfExists('menus');
     }
 };

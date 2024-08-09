@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MenuMakananResource;
 use App\Http\Resources\MenuMinumanResource;
+use App\Models\MenuMakanan;
 use App\Models\MenuMinuman;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -19,6 +20,12 @@ class MenuMinumanController extends Controller
     public function index()
     {
         $postAll = MenuMinuman::all();
+        if ($postAll->isEMpty()){
+            return Response([
+                'success' => false,
+                'message' => "Data Tidak ditemukan"
+            ], 404);
+        }
         return response([
             'success' => true,
             'message' => 'Berhasil mengambil data',
@@ -33,6 +40,7 @@ class MenuMinumanController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
+            'id_kantin' => 'required',
             'nama_minuman' => 'required',
             'deskripsi' => 'required',
             'harga' => 'required',
@@ -66,11 +74,17 @@ class MenuMinumanController extends Controller
     public function show($id)
     {
         try {
-            $post = MenuMinuman::findOrFail($id);
+            $post = MenuMinuman::where('id_minuman',$id)->get();
+            if ($post->isEmpty()){
+                return Response([
+                    'success' => false,
+                    'message' => "Data Tidak ditemukan"
+                ], 404);
+            }
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil mengambil data',
-                'data' => new MenuMinumanResource($post)
+                'data' => MenuMinumanResource::collection($post)
             ],200);
         } catch (ModelNotFoundException $e) {
             return response([
@@ -121,6 +135,25 @@ class MenuMinumanController extends Controller
         }
 
     }
+
+    public function indexById($id)
+    {
+        $menu = MenuMinuman::where('id_kantin',$id)->get();
+        if ($menu->isEmpty()){
+            return Response([
+                'success' => false,
+                'message' => "Data Kantin tidak ditemukan",
+            ]);
+        }
+
+        return response([
+            'success' => true,
+            'message' => "Berhasil mengambil data",
+            'data' => MenuMinumanResource::collection($menu)
+        ], 200);
+
+    }
+
 
     function generateRandomString($length = 40) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
