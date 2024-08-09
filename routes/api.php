@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\MenuController;
 use App\Http\Controllers\API\MenuMakananController;
 use App\Http\Controllers\API\MenuMinumanController;
 use Illuminate\Http\Request;
@@ -44,17 +45,11 @@ Route::post('midtrans/notif-hook',[\App\Http\Controllers\HandlerPaymentNotifCont
 /* add this code for req token
  * -> middleware('auth:api')
  * */
-//Route::apiResource('makananlist' , MenuMakananController::class)
-Route::post('makanan' , [MenuMakananController::class, 'store']);
-Route::get('makanan' , [MenuMakananController::class, 'index']);
-Route::get('makanan/{id}' , [MenuMakananController::class, 'show']);
-Route::patch('makanan/{id}' , [MenuMakananController::class, 'update']) ;
-Route::delete('makanan/{id}' , [MenuMakananController::class, 'destroy']);
-Route::get('makanan/kantin/{id}',[MenuMakananController::class, 'indexById']);
-
-Route::apiResource('minuman', MenuMinumanController::class);
-Route::get('minuman/kantin/{id}', [MenuMinumanController::class, 'indexById']);
-
-
-//Example Project
-//Route::apiResource('proyek', ProyekController::class) -> middleware('auth:api');
+//Route::apiResource('menu', MenuController::class);
+Route::post('menu', [MenuController::class, 'store']);
+Route::delete('menu/{id}', [MenuController::class, 'destroy']);
+Route::patch('menu/{id}', [MenuController::class, 'update']);
+Route::get('menu', [MenuController::class, 'index']);
+Route::get('menu/{id}', [MenuController::class, 'show']);
+Route::get('menu/kantin/{id}', [MenuController::class, 'indexByIdKantin']);
+Route::get('{kategori}',[MenuController::class, 'indexByKategori']);
