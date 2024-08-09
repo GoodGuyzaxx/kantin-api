@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\API\MenuController;
-use App\Http\Controllers\API\MenuMakananController;
-use App\Http\Controllers\API\MenuMinumanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
