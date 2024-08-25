@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\KantinController;
 use App\Http\Controllers\API\MenuController;
+use App\Http\Controllers\API\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
@@ -35,7 +37,13 @@ Route::post('konsumen/login', [KonsumenController::class, 'login']) -> name('log
 Route::post('admin/login', [AdminController::class, 'login']) ->name('login');
 Route::post('admin/register', [AdminController::class, 'register']);
 
+Route::get('rating', [RatingController::class, 'index']);
+Route::post('rating', [RatingController::class, 'store']);
 
+Route::get('kantin', [KantinController::class, 'index']);
+
+Route::get('orders/{email}', [\App\Http\Controllers\API\OrderPaymentController::class, 'getByEmail']);
+Route::get('order/id/{id}', [\App\Http\Controllers\API\OrderPaymentController::class, 'showOrderId']);
 Route::post('order/buy', [\App\Http\Controllers\API\OrderPaymentController::class, 'buy']);
 Route::post('midtrans/notif-hook',[\App\Http\Controllers\HandlerPaymentNotifController::class,'__invoke']);
 
@@ -47,7 +55,11 @@ Route::post('midtrans/notif-hook',[\App\Http\Controllers\HandlerPaymentNotifCont
 Route::post('menu', [MenuController::class, 'store']);
 Route::delete('menu/{id}', [MenuController::class, 'destroy']);
 Route::patch('menu/{id}', [MenuController::class, 'update']);
+
+
 Route::get('menu', [MenuController::class, 'index']);
 Route::get('menu/{id}', [MenuController::class, 'show']);
 Route::get('menu/kantin/{id}', [MenuController::class, 'indexByIdKantin']);
 Route::get('{kategori}',[MenuController::class, 'indexByKategori']);
+Route::get('{ketegori}/kantin/{id}', [MenuController::class, 'indexMenuWithId']);
+Route::get('{ketegori}/kantin/{id}', [MenuController::class, 'indexMenuWithId']);

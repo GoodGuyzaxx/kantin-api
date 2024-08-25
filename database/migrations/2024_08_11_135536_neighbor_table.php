@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
+        Schema::create('neighbors', function (Blueprint $table) {
+            $table->id('neighbor_id');
             $table->foreignId('id_konsumen')->constrained('konsumens','id_konsumen');
-            $table->foreignId('id_menu')
-                ->nullable()
-                ->constrained('menus','id_menu');
-            $table->tinyInteger('rating')->nullable();
-            $table->timestamps();
+            $table->text('to_konsumen_id');
+            $table->text('value');
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('neighbors');
     }
 };

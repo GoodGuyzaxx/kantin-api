@@ -24,6 +24,8 @@ class KonsumenController extends Controller
         $user = Konsumen::create($validate);
 
         return response()->json([
+            'success' => true,
+            'message' => "Akun Berhasil Dibuat",
             'data' => $user
         ],201);
     }
@@ -48,6 +50,7 @@ class KonsumenController extends Controller
             'success' => true,
             'message' => 'berhasil login',
             'data' => [
+                'id_konsumen' => $user->id_konsumen,
                 'nama_konsumen' => $user->nama_konsumen,
                 'email' => $user->email,
                 'no_telp' => $user->no_telp

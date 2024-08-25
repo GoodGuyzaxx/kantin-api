@@ -55,7 +55,7 @@ class MenuController extends Controller
         }
 
         $image = null;
-        if ($request -> file){
+        if ($request -> file('gambar')){
             $fileName = $this->generateRandomString();
             $extension = $request->file->extension();
             $image = $fileName.'.'.$extension;
@@ -172,8 +172,19 @@ class MenuController extends Controller
             'data'=> MenuResource::collection($data),
         ]);
     }
+    public function indexMenuWithId($kategori,$id){
+        $data = DB::table('menus')
+            ->where('id_kantin', $id)
+            ->where('kategori',$kategori)
+            ->get();
+        return Response()->json([
+            'data'=> MenuResource::collection($data),
+        ]);
+    }
 
-    function generateRandomString($length = 40) {
+
+
+    function generateRandomString($length = 20) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';

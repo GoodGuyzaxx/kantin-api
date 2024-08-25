@@ -15,8 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nama');
             $table->string('email');
-            $table->integer('id_makanan');
-            $table->integer('id_minuman');
             $table->unsignedBigInteger('total_amount');
             $table->string('status')->default('Pendding');
             $table->timestamps();

@@ -8,14 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'id_konsumen',
-        'id_makanan',
-        'id_minuman',
+        'id_menu',
         'rating'
     ];
-
     protected $casts = [
         'rating' => 'int'
     ];

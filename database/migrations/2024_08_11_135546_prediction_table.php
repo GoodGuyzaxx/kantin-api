@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kantins', function (Blueprint $table) {
-            $table->id('id_kantin');
-            $table->foreignId('id_admin')->constrained('admins', 'id_admin');
-            $table->string('nama_kantin');
-            $table->timestamps();
+        Schema::create('predictions', function (Blueprint $table) {
+            $table->id('prediction_id');
+            $table->foreignId('id_konsumen')->constrained('konsumens', 'id_konsumen');
+            $table->text('rating_prediction');
         });
     }
 
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kantins');
+        //
     }
 };
