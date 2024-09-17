@@ -51,6 +51,7 @@ class AdminController extends Controller
         return response([
             'success' => true,
             'message' => 'berhasil login',
+            'status' => 'admin',
             'data' => [
                 'id' => $admin->id_admin,
                 'nama_admin' => $admin->nama_admin,
