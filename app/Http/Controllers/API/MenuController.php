@@ -30,7 +30,6 @@ class MenuController extends Controller
         return response([
             'success' => true,
             'message' => "Berhasil mengambil data",
-            'totalmenu' => count($menu),
             'data' => MenuResource::collection($menu)
         ], 200);
     }
@@ -55,7 +54,7 @@ class MenuController extends Controller
         }
 
         $image = null;
-        if ($request -> file('gambar')){
+        if ($request -> file){
             $fileName = $this->generateRandomString();
             $extension = $request->file->extension();
             $image = $fileName.'.'.$extension;
@@ -65,8 +64,8 @@ class MenuController extends Controller
         $data['gambar'] = $image;
         $listMakanan = Menu::create($data);
         return response([
+            'success' => true,
             'message' => 'Berhasil Menambah Menu Makanan',
-            'data' => new MenuResource($listMakanan)
         ], 201);
     }
 
@@ -121,8 +120,8 @@ class MenuController extends Controller
         $dataPost['gambar'] = $image;
         $post->update($dataPost);
         return response([
-            'message' => 'Berhasil Mengubah Menu Makanan',
-            'data' => new MenuResource($post)
+            'success' => true,
+            'message' => 'Berhasil Mengubah Menu',
         ],201);
     }
 
@@ -131,8 +130,17 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $post = Menu::destroy($id);
-        if ($post) {
+        $menu = Menu::find($id);
+
+        if ($menu) {
+            // Hapus gambar jika ada
+            if ($menu->gambar) {
+                Storage::delete('public/gambar/' . $menu->gambar);
+            }
+
+            // Hapus data menu
+            $menu->delete();
+
             return response([
                 'success' => true,
                 'message' => 'Berhasil Menghapus Menu Makanan',
@@ -141,7 +149,7 @@ class MenuController extends Controller
             return response([
                 'success' => false,
                 'message' => "Data Tidak ditemukan"
-            ]);
+            ], 404);
         }
     }
 
@@ -158,7 +166,6 @@ class MenuController extends Controller
         return response([
             'success' => true,
             'message' => "Berhasil mengambil data",
-            'totalmenu' => count($menu),
             'data' => MenuResource::collection($menu)
         ], 200);
 
@@ -169,6 +176,8 @@ class MenuController extends Controller
         ->where('kategori',$kategori)
         ->get();
         return Response()->json([
+            'success' => true,
+            'message' => "Berhasil mengambil data",
             'data'=> MenuResource::collection($data),
         ]);
     }
@@ -178,6 +187,8 @@ class MenuController extends Controller
             ->where('kategori',$kategori)
             ->get();
         return Response()->json([
+            'success' => true,
+            'message' => "Berhasil mengambil data",
             'data'=> MenuResource::collection($data),
         ]);
     }
