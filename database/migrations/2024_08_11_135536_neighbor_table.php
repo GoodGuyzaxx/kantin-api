@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('neighbors', function (Blueprint $table) {
             $table->id('neighbor_id');
-            $table->foreignId('id_konsumen')->constrained('konsumens','id_konsumen');
+            $table->foreignId('id_konsumen')->constrained('konsumens','id_konsumen')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('to_konsumen_id');
             $table->text('value');
         });

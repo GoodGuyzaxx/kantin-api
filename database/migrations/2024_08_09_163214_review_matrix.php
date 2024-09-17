@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('review_matrix', function (Blueprint $table) {
             $table->id('review_id');
-            $table->foreignId('id_menu')->constrained('menus','id_menu');
+            $table->foreignId('id_menu')->constrained('menus','id_menu')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('value');
         });
     }

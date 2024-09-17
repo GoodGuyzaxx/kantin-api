@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('predictions', function (Blueprint $table) {
             $table->id('prediction_id');
-            $table->foreignId('id_konsumen')->constrained('konsumens', 'id_konsumen');
+            $table->foreignId('id_konsumen')->constrained('konsumens', 'id_konsumen')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('rating_prediction');
         });
     }

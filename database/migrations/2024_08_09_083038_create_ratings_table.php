@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_konsumen')->constrained('konsumens','id_konsumen');
+            $table->foreignId('id_konsumen')->constrained('konsumens','id_konsumen')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_menu')
                 ->nullable()
                 ->constrained('menus','id_menu');
