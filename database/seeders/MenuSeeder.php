@@ -19,6 +19,7 @@ class MenuSeeder extends Seeder
             'nama_menu' => 'Mie Goreng',
             'deskripsi' => 'Spesial Pake Telur',
             'harga' => 15000,
+            'gambar' => '1.jpg',
             'stock' => 1000,
             'kategori' => 'makanan',
             'created_at' => Carbon::now()
@@ -29,6 +30,7 @@ class MenuSeeder extends Seeder
             'nama_menu' => 'Mie Kuah',
             'deskripsi' => 'Spesial Pake Telur',
             'harga' => 15000,
+            'gambar' => '2.jpg',
             'stock' => 1000,
             'kategori' => 'makanan',
             'created_at' => Carbon::now()
@@ -39,6 +41,7 @@ class MenuSeeder extends Seeder
             'nama_menu' => 'Es Jeruk',
             'deskripsi' => 'dingin dan menyegarkan',
             'harga' => 10000,
+            'gambar' => '3.jpg',
             'stock' => 1000,
             'kategori' => 'minuman',
             'created_at' => Carbon::now()
@@ -50,6 +53,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'dingin dan menyegarkan',
             'harga' => 10000,
             'stock' => 1000,
+            'gambar' => '4.jpg',
             'kategori' => 'minuman',
             'created_at' => Carbon::now()
         ]);
@@ -62,6 +66,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'Spesial Pake Telur',
             'harga' => 15000,
             'stock' => 1000,
+            'gambar' => '1.jpg',
             'kategori' => 'makanan',
             'created_at' => Carbon::now()
         ]);
@@ -72,6 +77,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'Spesial Pake Telur',
             'harga' => 15000,
             'stock' => 1000,
+            'gambar' => '2.jpg',
             'kategori' => 'makanan',
             'created_at' => Carbon::now()
         ]);
@@ -82,6 +88,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'dingin dan menyegarkan',
             'harga' => 10000,
             'stock' => 1000,
+            'gambar' => '3.jpg',
             'kategori' => 'minuman',
             'created_at' => Carbon::now()
         ]);
@@ -92,6 +99,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'dingin dan menyegarkan',
             'harga' => 10000,
             'stock' => 1000,
+            'gambar' => '4.jpg',
             'kategori' => 'minuman',
             'created_at' => Carbon::now()
         ]);
@@ -104,6 +112,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'Spesial Pake Telur',
             'harga' => 15000,
             'stock' => 1000,
+            'gambar' => '1.jpg',
             'kategori' => 'makanan',
             'created_at' => Carbon::now()
         ]);
@@ -114,6 +123,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'Spesial Pake Telur',
             'harga' => 15000,
             'stock' => 1000,
+            'gambar' => '2.jpg',
             'kategori' => 'makanan',
             'created_at' => Carbon::now()
         ]);
@@ -124,6 +134,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'dingin dan menyegarkan',
             'harga' => 10000,
             'stock' => 1000,
+            'gambar' => '3.jpg',
             'kategori' => 'minuman',
             'created_at' => Carbon::now()
         ]);
@@ -134,6 +145,7 @@ class MenuSeeder extends Seeder
             'deskripsi' => 'dingin dan menyegarkan',
             'harga' => 10000,
             'stock' => 1000,
+            'gambar' => '4.jpg',
             'kategori' => 'minuman',
             'created_at' => Carbon::now()
         ]);
