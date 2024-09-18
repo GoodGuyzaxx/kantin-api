@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\isEmpty;
 
 
 class TransaksiController extends Controller
@@ -49,7 +50,7 @@ class TransaksiController extends Controller
 
         $dataID = Str::uuid()->toString();
         DB::table('transaksis')->insert([
-            'id_order' => $dataID ,
+            'id_order' => $request->id_order ,
             'id_kantin' => $request->id_kantin,
             'total_harga' => $request->total_harga,
             'menu' => $request->menu,
@@ -67,9 +68,24 @@ class TransaksiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transaksi $transaksi)
+    public function show($id)
     {
-        //
+        $dataDB = DB::table('transaksis')
+            ->where('id_order', $id)
+            ->get();
+
+        if ($dataDB->isEmpty()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaksi tidak ditemukan'
+                ],404);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi Berhasil',
+                'data' => $dataDB
+            ],200);
+        }
     }
 
     /**
