@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\PaymentHistory;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Fluent\Concerns\Has;
@@ -51,12 +52,23 @@ class HandlerPaymentNotifController extends Controller
             ],400);
         }
 
+        $transaksi = Transaksi::find($orderId);
+        if (!$transaksi) {
+            return response()->json([
+                'message' => 'invalid Oreder'
+            ],400);
+        }
+
         if($transactionStatus == 'settlement') {
            $order->status = 'Paid';
            $order->save();
+           $transaksi->status_pmbayaran = 'Paid';
+            $transaksi->save();
         }else if($transactionStatus == 'expire') {
             $order->status = 'Expaired';
             $order->save();
+            $transaksi->status_pmbayaran = 'Expaired';
+            $transaksi->save();
         }
 
         return response()->json([
