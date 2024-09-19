@@ -34,6 +34,7 @@ class OrderPaymentController extends Controller
     public function buy(Request $request){
 
         $validator = Validator::make($request->all(), [
+            'order_id' => 'required',
            'name'           => 'required',
            'nama_kantin'    => 'required',
            'email'          => 'required|email',
@@ -71,11 +72,11 @@ class OrderPaymentController extends Controller
             DB::beginTransaction();
             $serverKey = config('midtrans.key');
 
-            $orderID = Str::uuid()->toString();
+            $orderID = $request->order_id;
 //            $totalMakanan = $makanan->harga * $request->total_makanan;
 //            $totalMinuman = $minuman->harga * $request->total_minuman;
 //
-            $grossAmount = $request->total_harga + 500;
+            $grossAmount = $request->total_harga;
 
 
              $response = Http::withBasicAuth($serverKey, '')
