@@ -40,6 +40,8 @@ class TransaksiController extends Controller
             'menu' => 'required',
             'tipe_pembayaran' => 'required',
             'status_pembayaran' => 'required',
+            'email_konsumen' => 'required',
+            'nama_konsumen' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -48,7 +50,7 @@ class TransaksiController extends Controller
             ]);
         }
 
-        $dataID = Str::uuid()->toString();
+//        $dataID = Str::uuid()->toString();
         DB::table('transaksis')->insert([
             'id_order' => $request->id_order ,
             'id_kantin' => $request->id_kantin,
@@ -56,6 +58,8 @@ class TransaksiController extends Controller
             'menu' => $request->menu,
             'tipe_pembayaran' => $request->tipe_pembayaran,
             'status_pembayaran' => $request->status_pembayaran,
+            'email_konsumen' => $request->email_konsumen,
+            'nama_konsumen' => $request->nama_konsumen,
             'created_at' => now(),
         ]);
 
@@ -111,4 +115,59 @@ class TransaksiController extends Controller
     {
         //
     }
+
+    public function showByEmail($email)
+    {
+        $dataDB = DB::table('transaksis')
+            ->select('id_order', 'id_kantin', 'total_harga', 'menu', 'tipe_pembayaran', 'status_pembayaran', 'email_konsumen', 'created_at')
+            ->where('email_konsumen', $email)
+            ->get();
+
+        if ($dataDB->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaksi tidak ditemukan'
+            ], 404);
+        } else {
+            $groupedData = $dataDB->groupBy('id_order')->map(function ($group) {
+                $firstItem = $group->first();
+                return [
+                    'id_order' => $firstItem->id_order,
+                    'id_kantin' => $firstItem->id_kantin,
+                    'total_harga' => $firstItem->total_harga,
+                    'menu' => $group->pluck('menu')->toArray(),
+                    'tipe_pembayaran' => $firstItem->tipe_pembayaran,
+                    'status_pembayaran' => $firstItem->status_pembayaran,
+                    'email_konsumen' => $firstItem->email_konsumen,
+                    'created_at' => $firstItem->created_at,
+                ];
+            })->values();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi Berhasil',
+                'data' => $groupedData
+            ], 200);
+        }
+    }
+
+//    public function showByEmail($email){
+//
+//        $dataDB = DB::table('transaksis')
+//            ->where('email_konsumen', $email)
+//            ->get();
+//
+//        if ($dataDB->isEmpty()){
+//            return response()->json([
+//                'success' => false,
+//                'message' => 'Transaksi tidak ditemukan'
+//            ],404);
+//        } else {
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'Transaksi Berhasil',
+//                'data' => $dataDB
+//            ],200);
+//        }
+//    }
 }

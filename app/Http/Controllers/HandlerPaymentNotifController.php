@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\PaymentHistory;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Fluent\Concerns\Has;
 use phpseclib3\Crypt\Hash;
@@ -52,23 +53,36 @@ class HandlerPaymentNotifController extends Controller
             ],400);
         }
 
-        $transaksi = Transaksi::find($orderId);
+        $transaksi = DB::table('transaksis')
+            ->where('id_order', $orderId)
+            ->first();
+
         if (!$transaksi) {
             return response()->json([
-                'message' => 'invalid Oreder'
-            ],400);
+                'message' => 'Invalid Order'
+            ], 400);
         }
 
-        if($transactionStatus == 'settlement') {
-           $order->status = 'Paid';
-           $order->save();
-           $transaksi->status_pmbayaran = 'Paid';
-            $transaksi->save();
-        }else if($transactionStatus == 'expire') {
-            $order->status = 'Expaired';
+        if ($transactionStatus == 'settlement') {
+            $order->status = 'Paid';
             $order->save();
-            $transaksi->status_pmbayaran = 'Expaired';
-            $transaksi->save();
+
+            DB::table('transaksis')
+                ->where('id_order', $orderId)
+                ->update(['status_pembayaran' => 'Paid']);
+        } else if ($transactionStatus == 'expire') {
+            $order->status = 'Expired';
+            $order->save();
+
+            DB::table('transaksis')
+                ->where('id_order', $orderId)
+                ->update(['status_pembayaran' => 'Expired']);
+        } else if ($transactionStatus == 'cancel') {
+            $order->status = 'Cancel';
+            $order->save();
+            DB::table('transaksis')
+                ->where('id_order', $orderId)
+                ->update(['status_pembayaran' => 'Batal']);
         }
 
         return response()->json([

@@ -46,7 +46,8 @@ Route::get('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'indexByI
 Route::patch('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'updateRating']);
 
 Route::post('transaksi', [TransaksiController::class, 'store']);
-Route::get('transaksi/{id}', [TransaksiController::class, 'show']);
+Route::get('transaksi/id/{id}', [TransaksiController::class, 'show']);
+Route::get('transaksi/email/{email}', [TransaksiController::class, 'showByEmail']);
 
 Route::get('kantin', [KantinController::class, 'index']);
 

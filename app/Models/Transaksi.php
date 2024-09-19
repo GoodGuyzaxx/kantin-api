@@ -10,10 +10,11 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $fillable = [
-      'id-order',
-      'id-kantin',
-      'total-harga',
-      'tipe-pembayaran',
-      'status-pembayaran'
+      'id_order',
+      'id_kantin',
+      'total_harga',
+      'tipe_pembayaran',
+      'status_pembayaran',
+        'email_konsumen'
     ];
 }

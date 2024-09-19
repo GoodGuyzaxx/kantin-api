@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('menu');
             $table->enum('tipe_pembayaran',['tunai','non-tunai']);
             $table->string('status_pembayaran');
+            $table->string("email_konsumen");
+            $table->string("nama_konsumen");
             $table->timestamps();
         });
     }
