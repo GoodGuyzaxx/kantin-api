@@ -10,6 +10,7 @@ use App\Models\MenuMakanan;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -133,12 +134,16 @@ class MenuController extends Controller
         $menu = Menu::find($id);
 
         if ($menu) {
-            // Hapus gambar jika ada
             if ($menu->gambar) {
-                Storage::delete('public/gambar/' . $menu->gambar);
+                try {
+                    Storage::delete('public/gambar/' . $menu->gambar);
+                } catch (\Exception $e) {
+
+                    Log::error('Failed to delete image: ' . $e->getMessage());
+                }
             }
 
-            // Hapus data menu
+            // Delete the menu data
             $menu->delete();
 
             return response([
