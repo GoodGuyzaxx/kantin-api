@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('id_kantin')->constrained('kantins', 'id_kantin')->cascadeOnDelete()->cascadeOnUpdate();
             $table->unsignedBigInteger('total_harga');
             $table->string('menu');
+            $table->integer('jumlah');
+            $table->enum('status_pesanan',['Diterima','Diproses', 'Dibatalkan','Selesai'])->default('Diterima');
             $table->enum('tipe_pembayaran',['tunai','non-tunai']);
             $table->string('status_pembayaran');
             $table->string("email_konsumen");
