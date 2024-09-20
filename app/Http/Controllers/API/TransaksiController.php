@@ -38,6 +38,7 @@ class TransaksiController extends Controller
             'id_kantin' => 'required',
             'total_harga' => 'required',
             'menu' => 'required',
+            'jumlah' => 'required',
             'tipe_pembayaran' => 'required',
             'status_pembayaran' => 'required',
             'email_konsumen' => 'required',
@@ -56,6 +57,8 @@ class TransaksiController extends Controller
             'id_kantin' => $request->id_kantin,
             'total_harga' => $request->total_harga,
             'menu' => $request->menu,
+            'jumlah' => $request->jumlah,
+            'status_pesanan' => 'Diterima',
             'tipe_pembayaran' => $request->tipe_pembayaran,
             'status_pembayaran' => $request->status_pembayaran,
             'email_konsumen' => $request->email_konsumen,
@@ -119,8 +122,9 @@ class TransaksiController extends Controller
     public function showByEmail($email)
     {
         $dataDB = DB::table('transaksis')
-            ->select('id_order', 'id_kantin', 'total_harga', 'menu', 'tipe_pembayaran', 'status_pembayaran', 'email_konsumen', 'created_at')
+            ->select('id_order', 'id_kantin', 'total_harga', 'menu', 'status_pesanan', 'jumlah', 'tipe_pembayaran', 'status_pembayaran', 'email_konsumen', 'nama_konsumen', 'created_at')
             ->where('email_konsumen', $email)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         if ($dataDB->isEmpty()) {
@@ -131,15 +135,82 @@ class TransaksiController extends Controller
         } else {
             $groupedData = $dataDB->groupBy('id_order')->map(function ($group) {
                 $firstItem = $group->first();
+                $combinedMenu = $group->groupBy('menu')->map(function ($items) {
+                    return [
+                        'nama' => $items->first()->menu,
+                        'jumlah' => $items->sum('jumlah')
+                    ];
+                })->values();
+
                 return [
                     'id_order' => $firstItem->id_order,
                     'id_kantin' => $firstItem->id_kantin,
                     'total_harga' => $firstItem->total_harga,
-                    'menu' => $group->pluck('menu')->toArray(),
                     'tipe_pembayaran' => $firstItem->tipe_pembayaran,
                     'status_pembayaran' => $firstItem->status_pembayaran,
                     'email_konsumen' => $firstItem->email_konsumen,
+                    'nama_konsumen' => $firstItem->nama_konsumen,
                     'created_at' => $firstItem->created_at,
+                    'status_pesanan' => $firstItem->status_pesanan,
+                    'menu' => $combinedMenu,
+                ];
+            })->values();
+
+            // Limit the response to the 5 most recent transactions
+            $limitedData = $groupedData->take(5);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi Berhasil',
+                'data' => $limitedData
+            ], 200);
+        }
+    }
+
+    public function showByIdStatus($id,$status)
+    {
+        $dataDB = DB::table('transaksis')
+            ->select('id_order', 'id_kantin', 'total_harga', 'menu','jumlah','status_pesanan' ,'tipe_pembayaran', 'status_pembayaran', 'email_konsumen', 'nama_konsumen','created_at')
+            ->where('id_kantin', $id)
+            ->where('status_pesanan', $status)
+            ->where('status_pembayaran', '!=', 'Pending')
+            ->get();
+
+        if ($dataDB->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Transaksi tidak ditemukan'
+            ], 200);
+        } else {
+            $groupedData = $dataDB->groupBy('id_order')->map(function ($group) {
+                $firstItem = $group->first();
+
+                $menuItems = $group->map(function ($item) {
+                    return [
+                        'nama' => $item->menu,
+                        'jumlah' => $item->jumlah
+                    ];
+                });
+
+
+                $combinedMenu = $menuItems->groupBy('nama')->map(function ($items) {
+                    return [
+                        'nama' => $items->first()['nama'],
+                        'jumlah' => $items->sum('jumlah')
+                    ];
+                })->values();
+
+                return [
+                    'id_order' => $firstItem->id_order,
+                    'id_kantin' => $firstItem->id_kantin,
+                    'total_harga' => $firstItem->total_harga,
+                    'tipe_pembayaran' => $firstItem->tipe_pembayaran,
+                    'status_pembayaran' => $firstItem->status_pembayaran,
+                    'email_konsumen' => $firstItem->email_konsumen,
+                    'nama_konsumen' => $firstItem->nama_konsumen,
+                    'created_at' => $firstItem->created_at,
+                    'status_pesanan' => $firstItem->status_pesanan,
+                    'menu' => $combinedMenu,
                 ];
             })->values();
 
@@ -151,23 +222,63 @@ class TransaksiController extends Controller
         }
     }
 
-//    public function showByEmail($email){
-//
-//        $dataDB = DB::table('transaksis')
-//            ->where('email_konsumen', $email)
-//            ->get();
-//
-//        if ($dataDB->isEmpty()){
-//            return response()->json([
-//                'success' => false,
-//                'message' => 'Transaksi tidak ditemukan'
-//            ],404);
-//        } else {
-//            return response()->json([
-//                'success' => true,
-//                'message' => 'Transaksi Berhasil',
-//                'data' => $dataDB
-//            ],200);
-//        }
-//    }
+    public function updateStatus(Request $request,$id)
+    {
+        $data = $request->all();
+        $post = Transaksi::where('id_order', $id);
+
+        $post->update($data);
+        return response()->json([
+           'success' => true,
+           'message' => 'Transaksi Berhasil',
+        ]);
+
+
+    }
+
+    public function getTotalHargaByKantin($id)
+    {
+        try {
+            $result = DB::select("
+            SELECT
+                id_kantin,
+                SUM(CASE
+                    WHEN row_num = 1 THEN total_harga
+                    ELSE 0
+                END) AS total_harga_kantin
+            FROM (
+                SELECT
+                    id_kantin,
+                    id_order,
+                    total_harga,
+                    ROW_NUMBER() OVER (PARTITION BY id_kantin, id_order ORDER BY created_at) AS row_num
+                FROM transaksis
+                WHERE id_kantin = :id_kantin
+            ) subquery
+            GROUP BY id_kantin
+        ", ['id_kantin' => $id]);
+
+            if (empty($result)) {
+                return [
+                    'success' => false,
+                    'message' => 'Data Tidak ditemukan',
+                ];
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Total harga Berhasil didaptkan',
+                'data' => [
+                    'id_kantin' => $result[0]->id_kantin,
+                    'total_harga_kantin' => $result[0]->total_harga_kantin
+                ]
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Terjadi Error: ' . $e->getMessage(),
+            ];
+        }
+    }
+
 }
