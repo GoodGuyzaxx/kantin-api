@@ -48,6 +48,9 @@ Route::patch('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'update
 Route::post('transaksi', [TransaksiController::class, 'store']);
 Route::get('transaksi/id/{id}', [TransaksiController::class, 'show']);
 Route::get('transaksi/email/{email}', [TransaksiController::class, 'showByEmail']);
+Route::get('transaksi/status/{id}/{status}', [TransaksiController::class, 'showByIdStatus']);
+Route::get('transaksi/kantin/{id}', [TransaksiController::class, 'getTotalHargaByKantin']);
+Route::patch('transaksi/id/{id}', [TransaksiController::class, 'updateStatus']);
 
 Route::get('kantin', [KantinController::class, 'index']);
 
