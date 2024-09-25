@@ -9,7 +9,13 @@ use Illuminate\Notifications\Notifiable;
 class Admin extends Authenticatable
 {
     use HasFactory,Notifiable;
-    protected $guard = 'admin';
+
+//    protected $guard = 'user';
+
+    protected $table = "admins";
+
+    protected $primaryKey = 'id_admin';
+
     protected $fillable = [
         'nama_admin',
         'email',
@@ -21,8 +27,8 @@ class Admin extends Authenticatable
       'password'
     ];
 
-    public function user()
-    {
-        return$this->belongsTo(User::class);
-    }
+//    public function user()
+//    {
+//        return$this->belongsTo(User::class);
+//    }
 }
