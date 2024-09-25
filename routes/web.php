@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\web\RecommendationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,36 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('index');
+
+Route::redirect('home', 'dashboard');
+
+Route::get('/login',  [\App\Http\Controllers\web\LoginController::class, 'index'])->middleware('guest:web')->name('login.index');
+Route::post('/login',  [\App\Http\Controllers\web\LoginController::class, 'authenticate']);
+Route::post('/logout', [\App\Http\Controllers\web\LoginController::class, 'logout'])->name('logout');
+
+Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+    //ADMIN
+    route::get('/user', [\App\Http\Controllers\web\AdminController::class, 'index'])->name('user.index');
+    route::get('/user/create', [AdminController::class, 'index'])->name('create');
+    route::post('/user/register', [AdminController::class, 'register'])->name('register');
+    route::delete("user/delete/{id}", [\App\Http\Controllers\web\AdminController::class, 'destroy'])->name('delete');
+    route::get("user/edit/{id}", [\App\Http\Controllers\web\AdminController::class, 'edit'])->name('edit');
+    route::put("user/update/{id}", [\App\Http\Controllers\web\AdminController::class, 'update'])->name('update');
+
+
+    //KANTIN
+    route::get('/kantin', [\App\Http\Controllers\web\KantinController::class, 'index'])->name('kantin.index');
+    route::get('/kantin/create', [\App\Http\Controllers\web\KantinController::class, 'create'])->name('kantin.create');
+    route::post('/kantin/register', [\App\Http\Controllers\web\KantinController::class, 'store'])->name('kantin.register');
+    route::delete('/kantin/delete/{id}', [\App\Http\Controllers\web\KantinController::class, 'destroy'])->name('kantin.delete');
+    route::get('/kantin/edit/{id}', [\App\Http\Controllers\web\KantinController::class, 'edit'])->name('kantin.edit');
+    route::put('/kantin/update/{id}', [\App\Http\Controllers\web\KantinController::class, 'update'])->name('kantin.update');
+
+    //
+    route::get('/recommendations', [RecommendationController::class, 'getRecommendations'])->name('recommendations');
 });
+
