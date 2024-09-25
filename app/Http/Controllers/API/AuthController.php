@@ -5,16 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function index(){
-//        $post = User::all();
-//        return response()->json([
-//            'message' => 'no response for get'
-//        ],200);
-        return redirect('/');
+        return view('pages.login');
     }
 
     public function register(Request $request)
@@ -38,6 +35,47 @@ class AuthController extends Controller
         ], 201);
     }
 
+//    public function login(Request $request)
+//    {
+//        $loginData = $request->validate([
+//            'email' => 'required|email',
+//            'password' => 'required'
+//        ]);
+//
+//        if (!Auth::attempt($loginData)) {
+//            if ($request->expectsJson()) {
+//                return response()->json([
+//                    'success' => false,
+//                    'message' => "Email atau Password Salah"
+//                ], 400);
+//            }
+//            return back()->withErrors([
+//                'email' => 'The provided credentials do not match our records.',
+//            ])->onlyInput('email');
+//        }
+//
+//        $user = Auth::user();
+//        $accessToken = $user->createToken('authToken')->accessToken;
+//
+//        if ($request->expectsJson()) {
+//            return response()->json([
+//                'success' => true,
+//                'message' => "sukses login",
+//                'user' => [
+//                    'name' => $user->name,
+//                    'email' => $user->email,
+//                    'access_token' => $accessToken,
+//                ],
+//            ], 201);
+//        }
+//
+//        // For web requests
+//        $request->session()->regenerate();
+//        $request->session()->put('access_token', $accessToken);
+//        return redirect()->intended('dashboard')->with('status', 'You have been logged in successfully.');
+//    }
+
+//
     public function login(Request $request)
     {
         $loginData = $request->validate([
@@ -65,4 +103,5 @@ class AuthController extends Controller
             ],
         ],201);
     }
+
 }
