@@ -151,11 +151,279 @@ class RatingSeeder extends Seeder
 
         /*
          * Kantin B
+         * id_menu 5-8 = Kantin 2
          * */
+
+        //ANDO
+        DB::table('ratings')->insert([
+            'id_konsumen' => 1 ,
+            'id_menu' => 5,
+            'rating' => 5,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen'=> 1 ,
+            'id_menu' => 6,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 1 ,
+            'id_menu' => 7,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Alfi
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 5,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 6,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 7,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 8,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Malki
+        DB::table('ratings')->insert([
+            'id_konsumen' => 3 ,
+            'id_menu' => 5,
+            'rating' => 5,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 3 ,
+            'id_menu' => 8,
+            'rating' => 2,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Sherly
+        DB::table('ratings')->insert([
+            'id_konsumen' => 4 ,
+            'id_menu' => 6,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 4 ,
+            'id_menu' => 7,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Viko
+        DB::table('ratings')->insert([
+            'id_konsumen' => 5 ,
+            'id_menu' => 5,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 5 ,
+            'id_menu' => 6,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 5 ,
+            'id_menu' => 8,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Venia
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 5,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 6,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 7,
+            'rating' => 5,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 8,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+
 
         /*
          * Kantin C
+         * id_menu 9-12 = kantin 3
          * */
+
+        //ANDO
+        DB::table('ratings')->insert([
+            'id_konsumen' => 1 ,
+            'id_menu' => 9,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 1 ,
+            'id_menu' => 10,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 1 ,
+            'id_menu' => 11,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 1 ,
+            'id_menu' => 12,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        //ALFI
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 10,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 11,
+            'rating' => 5,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 2 ,
+            'id_menu' => 12,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Malki
+        DB::table('ratings')->insert([
+            'id_konsumen' => 3 ,
+            'id_menu' => 9,
+            'rating' => 2,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 3 ,
+            'id_menu' => 11,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 3 ,
+            'id_menu' => 12,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Sherly
+        DB::table('ratings')->insert([
+            'id_konsumen' => 4 ,
+            'id_menu' => 9,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 4 ,
+            'id_menu' => 10,
+            'rating' => 5,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 4 ,
+            'id_menu' => 12,
+            'rating' => 5,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Viko
+        DB::table('ratings')->insert([
+            'id_konsumen' => 5 ,
+            'id_menu' => 9,
+            'rating' => 3,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 5 ,
+            'id_menu' => 12,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Fenia
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 9,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 10,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
+
+        DB::table('ratings')->insert([
+            'id_konsumen' => 6 ,
+            'id_menu' => 12,
+            'rating' => 4,
+            'created_at' => Carbon::now()
+        ]);
 
     }
 }

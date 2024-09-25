@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             KonsumenSeeder::class,
             MenuSeeder::class,
             RatingSeeder::class,
+            UserSeeder::class,
+            test::class
         ]);
     }
 }
