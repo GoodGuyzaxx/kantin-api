@@ -50,7 +50,7 @@ return [
             'provider' => 'konsumens',
             'hash' => false,
         ],
-        'admin' => [
+        'user' => [
             'driver' => 'session',
             'provider' => 'admins',
             'hash' => false,
@@ -88,12 +88,12 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
-        ]
+        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+//         'users' => [
+//             'driver' => 'database',
+//             'table' => 'users',
+//         ],
     ],
 
     /*
