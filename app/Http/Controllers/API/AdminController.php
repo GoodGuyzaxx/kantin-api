@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,10 +14,28 @@ class AdminController extends Controller
 {
     public function index()
     {
-
+        return view('pages.admin.user.create');
     }
 
-    public function register(Request $request){
+//    public function register(Request $request){
+//        $validate = $request->validate([
+//            'nama_admin' => 'required',
+//            'email' => 'required|unique:admins,email',
+//            'no_telp' => 'required',
+//            'password' => 'required',
+//        ]);
+//
+//        $validate['password'] = Hash::make($request->password);
+//
+//        $tbAdmin = Admin::create($validate);
+//
+//        return response()->json([
+//            'data' => $tbAdmin
+//        ],201);
+//    }
+
+    public function register(Request $request)
+    {
         $validate = $request->validate([
             'nama_admin' => 'required',
             'email' => 'required|unique:admins,email',
@@ -28,10 +47,15 @@ class AdminController extends Controller
 
         $tbAdmin = Admin::create($validate);
 
-        return response()->json([
-            'data' => $tbAdmin
-        ],201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'data' => $tbAdmin
+            ], 201);
+        }
+
+        return redirect()->route('admin.user.index')->with('success', 'Admin registered successfully!');
     }
+
 
     public function login(request $request){
         $validator = $request->validate([
@@ -40,18 +64,18 @@ class AdminController extends Controller
         ]);
 
 
-        if (!Auth::guard('admin')->attempt($validator)) {
+        if (!Auth::guard('user')->attempt($validator)) {
             return response()->json([
                 'success' => false,
                 'message' => 'email atau password salah',
             ]);
         }
 
-        $admin = Auth::guard('admin')->user();
+        $admin = Auth::guard('user')->user();
         return response([
             'success' => true,
             'message' => 'berhasil login',
-            'status' => 'admin',
+            'status' => 'user',
             'data' => [
                 'id' => $admin->id_admin,
                 'nama_admin' => $admin->nama_admin,
