@@ -48,25 +48,26 @@ class Handler extends ExceptionHandler
         });
     }
 
-    public function render($request, Throwable $e)
-    {
-        if ($e instanceof AuthenticationException) {
-            return response() -> json([
-                'success' => false,
-                'message' => 'token '.$e -> getMessage(),
-            ], 401);
-        } elseif ($request->is('api/proyek/*')) {
-            if ($e -> getPrevious() instanceof ModelNotFoundException) {
-                /** @var ModelNotFoundException $modelNotFound */
-                $modelNotFound = $e->getPrevious();
-                if($modelNotFound->getModel() === Product::class) {
-                    return response()->json([
-                        'message' => 'Product not found.'
-                    ], 404);
-                }
-            }
-        }
-        return parent::render($request, $e);
-    }
+//    public function render($request, Throwable $e)
+//    {
+//        if ($e instanceof AuthenticationException) {
+//            return response() -> json([
+//                'success' => false,
+//                'message' => 'token '.$e -> getMessage(),
+//            ], 401);
+//
+//        } elseif ($request->is('api/proyek/*')) {
+//            if ($e -> getPrevious() instanceof ModelNotFoundException) {
+//                /** @var ModelNotFoundException $modelNotFound */
+//                $modelNotFound = $e->getPrevious();
+//                if($modelNotFound->getModel() === Product::class) {
+//                    return response()->json([
+//                        'message' => 'Product not found.'
+//                    ], 404);
+//                }
+//            }
+//        }
+//        return parent::render($request, $e);
+//    }
 
 }
