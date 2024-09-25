@@ -9,6 +9,9 @@ class Kantin extends Model
 {
     use HasFactory;
 
+    protected $table = 'kantins';
+    protected $primaryKey = 'id_kantin';
+
     protected $fillable = [
         'id_admin',
         'nama_kantin'
