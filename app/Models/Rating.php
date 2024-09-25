@@ -16,4 +16,14 @@ class Rating extends Model
     protected $casts = [
         'rating' => 'int'
     ];
+
+    public function konsumen()
+    {
+        return $this->belongsTo(Konsumen::class);
+    }
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
 }
