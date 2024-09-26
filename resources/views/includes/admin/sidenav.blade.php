@@ -30,7 +30,7 @@
 
                 <a class="nav-link {{ Request::is('recommendations*') ? 'active' : '' }}"
                    href="{{ route('admin.recommendations') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-user-pen"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
                     Rekomendasi Menu
                 </a>
                 {{-- kriteria --}}
