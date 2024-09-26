@@ -47,7 +47,15 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
     route::get('/kantin/edit/{id}', [\App\Http\Controllers\web\KantinController::class, 'edit'])->name('kantin.edit');
     route::put('/kantin/update/{id}', [\App\Http\Controllers\web\KantinController::class, 'update'])->name('kantin.update');
 
-    //
+
+    //Konsumen
+    route::get('/konsumen', [\App\Http\Controllers\web\KonsumenController::class, 'index'])->name('konsumen.index');
+    route::get('/konsumen/create', [\App\Http\Controllers\web\KonsumenController::class, 'create'])->name('konsumen.create');
+    route::get('/konsumen/edit/{id}', [\App\Http\Controllers\web\KonsumenController::class, 'edit'])->name('konsumen.edit');
+    route::put('/konsumen/edit/{id}', [\App\Http\Controllers\web\KonsumenController::class, 'update'])->name('konsumen.update');
+    route::post('/konsumen/register', [\App\Http\Controllers\web\KonsumenController::class, 'store'])->name('konsumen.register');
+
+    //Rekomendasi
     route::get('/recommendations', [RecommendationController::class, 'getRecommendations'])->name('recommendations');
 });
 

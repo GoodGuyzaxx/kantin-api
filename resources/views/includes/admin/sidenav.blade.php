@@ -16,6 +16,12 @@
                     Admin Kantin
                 </a>
 
+                <a class="nav-link {{ Request::is('konsumen*') ? 'active' : '' }}"
+                   href="{{ route('admin.konsumen.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-pen"></i></div>
+                    Konsumen
+                </a>
+
                 <a class="nav-link {{ Request::is('kantin*') ? 'active' : '' }}"
                    href="{{ route('admin.kantin.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-user-pen"></i></div>

@@ -10,8 +10,7 @@ class Konsumen extends Authenticatable
 {
     use HasFactory,Notifiable;
 
-    protected $guard = 'konsumen' ;
-
+    protected $table = 'konsumens';
     protected $primaryKey = 'id_konsumen';
     protected $fillable = [
       'nama_konsumen',
