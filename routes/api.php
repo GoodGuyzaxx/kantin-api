@@ -37,8 +37,8 @@ Route::post('konsumen/register', [KonsumenController::class, 'register']);
 Route::post('konsumen/login', [KonsumenController::class, 'login']) -> name('login');
 route::patch('konsumen/{id}', [KonsumenController::class,'update']);
 
-Route::post('user/login', [AdminController::class, 'login']) ->name('login');
-Route::post('user/register', [AdminController::class, 'register']);
+Route::post('admin/login', [AdminController::class, 'login']) ->name('login');
+Route::post('admin/register', [AdminController::class, 'register']);
 
 Route::get('rating', [RatingController::class, 'index']);
 Route::post('rating', [RatingController::class, 'store']);
