@@ -68,7 +68,7 @@ class AdminController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'email atau password salah',
-            ]);
+            ],400);
         }
 
         $admin = Auth::guard('user')->user();
