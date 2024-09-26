@@ -17,9 +17,7 @@ class CollaborativeFilteringService
 
         // Buat matriks konsumen-item
         $konsumenItemMatrix = [];
-//        foreach ($konsumens as $konsumen) {
-//            $konsumenItemMatrix[->id_konsumen] = [$konsumen->id_konsumen];
-//        }
+
         Log::info("matrix first", $konsumenItemMatrix);
 
         foreach ($ratings as $rating) {
