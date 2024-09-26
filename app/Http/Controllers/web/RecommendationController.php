@@ -51,7 +51,7 @@ class RecommendationController extends Controller
 //            $recommendedMenus = Menu::whereIn('id_menu',array_keys($recommendations))->get();
         $recommendedMenus = Recommendation::join('menus', 'recommendations.id_menu', '=', 'menus.id_menu')->get();
 
-        return view('recommendations', compact('recommendedMenus'));
+        return view('pages.recommendations', compact('recommendedMenus'));
     }
 
     private function getPopularMenus()
