@@ -17,21 +17,21 @@ class AdminSeeder extends Seeder
     {
         DB::table('admins')->insert([
             'nama_admin' => 'Kantin 1',
-            'email' => 'kantin1@user.com',
+            'email' => 'kantin1@admin.com',
             'no_telp' => '082212345678',
             'password' => hash::make('123'),
             'created_at' => Carbon::now()
         ]);
         DB::table('admins')->insert([
             'nama_admin' => 'Kantin 2',
-            'email' => 'kantin2@user.com',
+            'email' => 'kantin2@admin.com',
             'no_telp' => '082212345678',
             'password' => hash::make('123'),
             'created_at' => Carbon::now()
         ]);
         DB::table('admins')->insert([
             'nama_admin' => 'Kantin 3',
-            'email' => 'kantin3@user.com',
+            'email' => 'kantin3@admin.com',
             'no_telp' => '082212345678',
             'password' => hash::make('123'),
             'created_at' => Carbon::now()
