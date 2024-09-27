@@ -21,7 +21,7 @@ class AdminController extends Controller
             'count' => $data->count(),
             'first_user' => $data->first() ? $data->first()->toArray() : null
         ]);
-//        return view('pages.admin.user.data');
+        //        return view('pages.admin.user.data');
         return view('pages.admin.user.data', [
             'title' => 'Data Pengguna',
             'admins' => $data
@@ -61,7 +61,6 @@ class AdminController extends Controller
         $data = Admin::find($id);
 
         return view('pages.admin.user.edit', compact('data'));
-
     }
 
     /**
@@ -70,9 +69,9 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-                'nama_admin' => 'required',
-                'email' => 'required',
-                'no_telp' => 'required',
+            'nama_admin' => 'required',
+            'email' => 'required',
+            'no_telp' => 'required',
         ]);
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -81,7 +80,7 @@ class AdminController extends Controller
         $data['email'] = $request->email;
         $data['no_telp'] = $request->no_telp;
 
-        if ($request->passowrd){
+        if ($request->passowrd) {
             $data['password'] = Hash::make($request->password);
         }
 
@@ -93,11 +92,11 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin,$id)
+    public function destroy(Admin $admin, $id)
     {
         $data = Admin::find($id);
 
-        if ($data){
+        if ($data) {
             $data->delete();
         }
         return redirect()->route('admin.user.index')->with('success', 'Data berhasil dihapus');
