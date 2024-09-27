@@ -54,6 +54,13 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
     route::get('/konsumen/edit/{id}', [\App\Http\Controllers\web\KonsumenController::class, 'edit'])->name('konsumen.edit');
     route::put('/konsumen/edit/{id}', [\App\Http\Controllers\web\KonsumenController::class, 'update'])->name('konsumen.update');
     route::post('/konsumen/register', [\App\Http\Controllers\web\KonsumenController::class, 'store'])->name('konsumen.register');
+    route::delete('/konsumen/delete/{id}', [\App\Http\Controllers\web\KonsumenController::class, 'destroy'])->name('konsumen.delete');
+
+
+    //Menu
+    route::get('/menu', [\App\Http\Controllers\web\MenuController::class, 'index'])->name('menu.index');
+    route::delete('/menu/delete/{id}', [\App\Http\Controllers\web\MenuController::class, 'destroy'])->name('menu.delete');
+
 
     //Rekomendasi
     route::get('/recommendations', [RecommendationController::class, 'getRecommendations'])->name('recommendations');
