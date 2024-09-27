@@ -98,8 +98,12 @@ class KonsumenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Konsumen $konsumen)
+    public function destroy(Konsumen $konsumen, $id)
     {
-        //
+        $data = Konsumen::find($id);
+        if ($data){
+            $data->delete();
+        }
+        return redirect()->route('admin.konsumen.index')->with('success', 'Data Konsumen Berhasil Dihapus');
     }
 }
