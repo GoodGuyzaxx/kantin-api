@@ -10,7 +10,9 @@
     @include('includes.login.style')
 </head>
 
-<body class="my-login-page">
+<body class="my-login-pagestyle=" style="background-color: #2C2A4A;">
+
+@include('includes.login.background')
 
 {{-- main --}}
 @yield('content')
