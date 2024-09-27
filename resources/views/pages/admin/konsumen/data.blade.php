@@ -4,7 +4,7 @@
     <div class="container-fluid px-4">
         <div class="row align-items-center">
             <div class="col-sm-6 col-md-8">
-                <h1 class="mt-4">Daftar Admin Kantin</h1>
+                <h1 class="mt-4">Daftar Konsumen</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">{{ $title }}</li>
@@ -59,7 +59,7 @@
                                         <a href="{{route('admin.konsumen.edit', $konsumen->id_konsumen)}}" class="badge bg-warning"><i
                                                 class="fa-solid fa-pen-to-square"></i>
                                         </a>
-                                        <form action="{{route('admin.delete', $konsumen->id_konsumen)}}" method="POST"
+                                        <form action="{{route('admin.konsumen.delete', $konsumen->id_konsumen)}}" method="POST"
                                             class="d-inline">
                                             @method('delete')
                                             @csrf

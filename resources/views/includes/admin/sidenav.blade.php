@@ -28,6 +28,12 @@
                     Kantin
                 </a>
 
+                <a class="nav-link {{ Request::is('menu*') ? 'active' : '' }}"
+                   href="{{ route('admin.menu.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+                    Menu
+                </a>
+
                 <a class="nav-link {{ Request::is('recommendations*') ? 'active' : '' }}"
                    href="{{ route('admin.recommendations') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
