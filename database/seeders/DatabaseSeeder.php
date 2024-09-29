@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             RatingSeeder::class,
             UserSeeder::class,
-            test::class
+            test::class,
+            KategoriSeeder::class
         ]);
     }
 }

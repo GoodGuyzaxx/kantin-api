@@ -61,6 +61,11 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
     route::get('/menu', [\App\Http\Controllers\web\MenuController::class, 'index'])->name('menu.index');
     route::delete('/menu/delete/{id}', [\App\Http\Controllers\web\MenuController::class, 'destroy'])->name('menu.delete');
 
+    //Kategori
+    route::get('kategori', [\App\Http\Controllers\web\KategoriController::class, 'index'])->name('kategori.index');
+    route::post('kategori', [\App\Http\Controllers\web\KategoriController::class, 'store'])->name('kategori.create');
+    route::get('kategori/data', [\App\Http\Controllers\web\KategoriController::class, 'show'])->name('kategori.show');
+    route::delete('kategori/data/{id}', [\App\Http\Controllers\web\KategoriController::class, 'destroy'])->name('kategori.delete');
 
     //Rekomendasi
     route::get('/recommendations', [RecommendationController::class, 'getRecommendations'])->name('recommendations');

@@ -34,6 +34,12 @@
                     Menu
                 </a>
 
+                <a class="nav-link {{ Request::is('kategori*') ? 'active' : '' }}"
+                   href="{{ route('admin.kategori.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
+                    Kategori
+                </a>
+
                 <a class="nav-link {{ Request::is('recommendations*') ? 'active' : '' }}"
                    href="{{ route('admin.recommendations') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
