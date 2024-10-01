@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,45 +33,116 @@ class TransaksiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
+            'id_order' => 'required',
             'id_kantin' => 'required',
             'total_harga' => 'required',
+            'id_menu' => 'required',
             'menu' => 'required',
             'jumlah' => 'required',
             'tipe_pembayaran' => 'required',
             'status_pembayaran' => 'required',
-            'email_konsumen' => 'required',
+            'email_konsumen' => 'required|email',
             'nama_konsumen' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
+                'success' => false,
                 'error' => $validator->errors()
-            ]);
+            ], 422);
         }
 
-//        $dataID = Str::uuid()->toString();
-        DB::table('transaksis')->insert([
-            'id_order' => $request->id_order ,
-            'id_kantin' => $request->id_kantin,
-            'total_harga' => $request->total_harga,
-            'menu' => $request->menu,
-            'jumlah' => $request->jumlah,
-            'status_pesanan' => 'Diterima',
-            'tipe_pembayaran' => $request->tipe_pembayaran,
-            'status_pembayaran' => $request->status_pembayaran,
-            'email_konsumen' => $request->email_konsumen,
-            'nama_konsumen' => $request->nama_konsumen,
-            'created_at' => now(),
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Berhasil Menambah Transaksi',
-        ],201);
+            $menu = Menu::findOrFail($request->id_menu);
+
+            if ($menu->stock < $request->jumlah) {
+                throw new \Exception('Insufficient stock');
+            }
+
+            $transaksi = Transaksi::create([
+                'id_order' => $request->id_order,
+                'id_kantin' => $request->id_kantin,
+                'total_harga' => $request->total_harga,
+                'menu' => $request->menu,
+                'jumlah' => $request->jumlah,
+                'status_pesanan' => 'Diterima',
+                'tipe_pembayaran' => $request->tipe_pembayaran,
+                'status_pembayaran' => $request->status_pembayaran,
+                'email_konsumen' => $request->email_konsumen,
+                'nama_konsumen' => $request->nama_konsumen,
+            ]);
+
+            $menu->decrement('stock', $request->jumlah);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil Menambah Transaksi'
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal Menambah Transaksi',
+                'error' => $e->getMessage()
+            ], 400);
+        }
     }
+
+//    public function store(Request $request)
+//    {
+//        $validator = Validator::make($request->all(),[
+//            'id_kantin' => 'required',
+//            'total_harga' => 'required',
+//            'id_menu' => 'required',
+//            'menu' => 'required',
+//            'jumlah' => 'required',
+//            'tipe_pembayaran' => 'required',
+//            'status_pembayaran' => 'required',
+//            'email_konsumen' => 'required',
+//            'nama_konsumen' => 'required'
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return response()->json([
+//                'error' => $validator->errors()
+//            ]);
+//        }
+//
+////        $dataID = Str::uuid()->toString();
+//        DB::table('transaksis')->insert([
+//            'id_order' => $request->id_order ,
+//            'id_kantin' => $request->id_kantin,
+//            'total_harga' => $request->total_harga,
+//            'menu' => $request->menu,
+//            'jumlah' => $request->jumlah,
+//            'status_pesanan' => 'Diterima',
+//            'tipe_pembayaran' => $request->tipe_pembayaran,
+//            'status_pembayaran' => $request->status_pembayaran,
+//            'email_konsumen' => $request->email_konsumen,
+//            'nama_konsumen' => $request->nama_konsumen,
+//            'created_at' => now(),
+//        ]);
+//
+//        return response()->json([
+//            'success' => true,
+//            'message' => 'Berhasil Menambah Transaksi',
+//        ],201);
+//
+//        $dataStock = Menu::find($request->id_menu);
+//        DB::table('menus')->where('id_menu', $request->id_menu)->update([
+//            'stock' => $dataStock->stock - $request->jumlah
+//        ]);
+//
+//    }
 
     /**
      * Display the specified resource.
