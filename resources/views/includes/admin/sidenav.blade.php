@@ -40,6 +40,12 @@
                     Kategori
                 </a>
 
+                <a class="nav-link {{ Request::is('rating*') ? 'active' : '' }}"
+                   href="{{ route('admin.rating.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-star"></i></div>
+                    Rating
+                </a>
+
                 <a class="nav-link {{ Request::is('recommendations*') ? 'active' : '' }}"
                    href="{{ route('admin.recommendations') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>

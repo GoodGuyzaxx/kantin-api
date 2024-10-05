@@ -28,7 +28,7 @@ class Konsumen extends Authenticatable
         return$this->belongsTo(User::class);
     }
 
-    public function ratings()
+    public function rating()
     {
         return $this->hasMany(Rating::class);
     }
