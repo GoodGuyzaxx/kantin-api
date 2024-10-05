@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
-use App\Models\rating;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
@@ -13,7 +13,7 @@ class RatingController extends Controller
      */
     public function index()
     {
-        $data = rating::join('menus', 'menus.id_menu', '=', 'ratings.id_menu')
+        $data = Rating::join('menus', 'menus.id_menu', '=', 'ratings.id_menu')
             ->join('konsumens', 'konsumens.id_konsumen', '=', 'ratings.id_konsumen')
             ->join('kantins', 'kantins.id_kantin', '=', 'menus.id_kantin')
             ->get();
