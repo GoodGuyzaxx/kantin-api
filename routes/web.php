@@ -72,6 +72,10 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
     route::get('rating/data/{id}', [\App\Http\Controllers\web\RatingController::class, 'show'])->name('rating.show');
     route::delete('rating/data/{id}', [\App\Http\Controllers\web\RatingController::class, 'destroy'])->name('rating.delete');
 
+    //Transaski
+    route::get('transaksi', [\App\Http\Controllers\web\TransaksiController::class, 'index'])->name('transaksi.index');
+    route::delete('transaksi/delete/{id}', [\App\Http\Controllers\web\TransaksiController::class, 'destroy'])->name('transaksi.delete');
+
 
     //Rekomendasi
     route::get('/recommendations', [RecommendationController::class, 'getRecommendations'])->name('recommendations');

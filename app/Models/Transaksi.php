@@ -20,4 +20,8 @@ class Transaksi extends Model
         'email_konsumen',
         'nama_konsumen'
     ];
+
+    public function kantin(){
+        return $this->belongsTo(Kantin::class, 'id_kantin', 'id_kantin');
+    }
 }

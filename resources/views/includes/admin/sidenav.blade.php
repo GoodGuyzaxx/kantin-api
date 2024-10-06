@@ -51,6 +51,12 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
                     Rekomendasi Menu
                 </a>
+
+                <a class="nav-link {{ Request::is('transaksi*') ? 'active' : '' }}"
+                   href="{{ route('admin.transaksi.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
+                    Daftar Transaksi
+                </a>
                 {{-- kriteria --}}
 {{--                @can('admin')--}}
 {{--                    <a class="nav-link {{ Request::is('dashboard/kriteria*') ? 'active' : '' }}"--}}
