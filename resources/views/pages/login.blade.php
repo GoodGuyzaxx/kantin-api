@@ -7,7 +7,7 @@
 @section('content')
     <!-- ======= main ======= -->
     <section class="my-login-page">
-        <div class="container form-Bg">
+        <div class="container form-Bg" style="margin-top: 200px">
             <div class="row justify-content-md-center">
                 <div class="card-wrapper">
                     <div class="card fat">
