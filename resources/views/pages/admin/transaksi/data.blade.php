@@ -4,7 +4,7 @@
     <div class="container-fluid px-4">
         <div class="row align-items-center">
             <div class="col-sm-6 col-md-8">
-                <h1 class="mt-4">Daftar Menu</h1>
+                <h1 class="mt-4">List Transaksi</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">{{ $title }}</li>
@@ -50,6 +50,7 @@
                             <th>Jenis Pembayaran</th>
                             <th>Status Pembayaran</th>
                             <th>Nama Pemesanan</th>
+                            <th>Tanggal Order</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -67,6 +68,7 @@
                                     <td class="text-center">{{ $riwayat->tipe_pembayaran }}</td>
                                     <td class="text-center">{{ $riwayat->status_pembayaran }}</td>
                                     <td class="text-center">{{ $riwayat->nama_konsumen }}</td>
+                                    <td class="text-center">{{ $riwayat->created_at }}</td>
                                     <td class="text-center">
                                         <form action="{{route('admin.transaksi.delete', $riwayat->id)}}" method="POST"
                                             class="d-inline">
