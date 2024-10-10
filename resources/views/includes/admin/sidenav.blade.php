@@ -36,7 +36,7 @@
 
                 <a class="nav-link {{ Request::is('kategori*') ? 'active' : '' }}"
                    href="{{ route('admin.kategori.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                     Kategori
                 </a>
 
@@ -46,16 +46,41 @@
                     Rating
                 </a>
 
+                <div class="sb-sidenav-menu-heading">Collaborative Filtering</div>
+
                 <a class="nav-link {{ Request::is('recommendations*') ? 'active' : '' }}"
                    href="{{ route('admin.recommendations') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-simple"></i></div>
                     Rekomendasi Menu
                 </a>
 
-                <a class="nav-link {{ Request::is('transaksi*') ? 'active' : '' }}"
+{{--                Transaksi Menu--}}
+                <div class="sb-sidenav-menu-heading">Transaksi</div>
+
+                <a class="nav-link {{ Request::is('transaksi') ? 'active' : '' }}"
                    href="{{ route('admin.transaksi.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-table-columns"></i></div>
-                    Daftar Transaksi
+                    List Transaksi
+                </a>
+
+                <a class="nav-link {{ Request::is('transaksi/kantin*') ? 'active' : '' }}"
+                   href="{{ route('admin.transaksi.kantin.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-shop"></i></div>
+                    Transaksi Kantin
+                </a>
+
+                <a class="nav-link {{ Request::is('transaksi/konsumen*') ? 'active' : '' }}"
+                   href="{{ route('admin.transaksi.konsumen.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                    Transaksi Konsumen
+                </a>
+
+
+                <div class="sb-sidenav-menu-heading">Pengaturan</div>
+                <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }} "
+                   href="{{route('admin.super.show')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-pen"></i></div>
+                    Ubah Profil
                 </a>
                 {{-- kriteria --}}
 {{--                @can('admin')--}}
@@ -99,11 +124,6 @@
 {{--                        Data Pengguna--}}
 {{--                    </a>--}}
 {{--                @endcan--}}
-{{--                <a class="nav-link {{ Request::is('dashboard/profile*') ? 'active' : '' }}"--}}
-{{--                    href="{{ route('profile.index') }}">--}}
-{{--                    <div class="sb-nav-link-icon"><i class="fas fa-user-pen"></i></div>--}}
-{{--                    Ubah Profil--}}
-{{--                </a>--}}
             </div>
         </div>
         <div class="sb-sidenav-footer">
