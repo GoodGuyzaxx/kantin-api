@@ -29,6 +29,9 @@ Route::post('/logout', [\App\Http\Controllers\web\LoginController::class, 'logou
 Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    //SuperAdmin
+    route::get('admin', [\App\Http\Controllers\web\UserController::class, 'show'])->name('super.show');
+    route::put('admin/update/{id}', [\App\Http\Controllers\web\UserController::class, 'update'])->name('super.update');
 
     //ADMIN
     route::get('/user', [\App\Http\Controllers\web\AdminController::class, 'index'])->name('user.index');
@@ -75,6 +78,14 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
     //Transaski
     route::get('transaksi', [\App\Http\Controllers\web\TransaksiController::class, 'index'])->name('transaksi.index');
     route::delete('transaksi/delete/{id}', [\App\Http\Controllers\web\TransaksiController::class, 'destroy'])->name('transaksi.delete');
+
+    route::get('transaksi/kantin',[\App\Http\Controllers\web\TransaksiController::class, 'indexKantin'])->name('transaksi.kantin.index');
+    route::get('transaksi/kantin/{nama}',[\App\Http\Controllers\web\TransaksiController::class, 'showDetailKantin'])->name('transaksi.kantin.detail');
+    route::get('transaksi/kantin/{nama}/export', [\App\Http\Controllers\web\TransaksiController::class, 'exportTransaksiKantin'])->name('transaksi.kantin.export');
+
+    route::get('transaksi/konsumen', [\App\Http\Controllers\web\TransaksiController::class,'indexKonsumen'])->name('transaksi.konsumen.index');
+    route::get('transaksi/konsumen/{nama}', [\App\Http\Controllers\web\TransaksiController::class,'showDetailTransaksi'])->name('transaksi.konsumen.detail');
+    Route::get('transaksi/konsumen/{nama}/export', [\App\Http\Controllers\web\TransaksiController::class, 'exportTransaksi'])->name('transaksi.konsumen.export');
 
 
     //Rekomendasi
