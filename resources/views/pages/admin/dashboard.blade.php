@@ -37,7 +37,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Konsumen</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$Admin}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$Konsumen}}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-users fa-2x text-gray-300"></i>
