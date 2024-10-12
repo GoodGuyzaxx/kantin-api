@@ -55,7 +55,7 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td class="text-center">{{ $menu->nama_kantin }}</td>
                                     <td class="text-center">{{ $menu->nama_menu }}</td>
-                                    <td class="text-center">{{ $menu->harga }}</td>
+                                    <td class="text-center">Rp {{ number_format($menu->harga, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $menu->kategori }}</td>
                                     <td class="text-center">
                                         <form action="{{route('admin.menu.delete', $menu->id_menu)}}" method="POST"

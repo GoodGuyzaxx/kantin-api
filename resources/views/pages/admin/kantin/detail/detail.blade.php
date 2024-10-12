@@ -76,7 +76,7 @@
                                 <td class="text-center">{{ $riwayat->id_order }}</td>
                                 <td class="text-center">{{ $riwayat->nama_konsumen }}</td>
                                 <td class="text-center">{{ $riwayat->email_konsumen }}</td>
-                                <td class="text-center">{{ $riwayat->total_harga }}</td>
+                                <td class="text-center">Rp {{ number_format($riwayat->total_harga, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ $riwayat->menu }}</td>
                                 <td class="text-center">{{ $riwayat->jumlah }}</td>
                                 <td class="text-center">{{ $riwayat->status_pesanan }}</td>
