@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\web\DownloadController;
 use App\Http\Controllers\web\RecommendationController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('login');
+    return view('landing');
 })->name('index');
 
-Route::redirect('home', 'dashboard');
+Route::get('/download/apk', [DownloadController::class, 'downloadAPK'])->name('download');
 
 Route::get('/login',  [\App\Http\Controllers\web\LoginController::class, 'index'])->middleware('guest:web')->name('login.index');
 Route::post('/login',  [\App\Http\Controllers\web\LoginController::class, 'authenticate']);
