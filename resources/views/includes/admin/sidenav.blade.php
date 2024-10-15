@@ -3,6 +3,10 @@
         <div class="sb-sidenav-menu">
             <hr class="bs-sidenav-bar">
             <div class="nav">
+                <a class="nav-link" href="/">
+                    <div class="sb-nav-link-icon"><i class="fas fa-globe"></i></div>
+                    Home
+                </a>
                 <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
