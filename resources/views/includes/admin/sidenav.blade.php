@@ -69,11 +69,11 @@
                     Transaksi Kantin
                 </a>
 
-                <a class="nav-link {{ Request::is('transaksi/konsumen*') ? 'active' : '' }}"
-                   href="{{ route('admin.transaksi.konsumen.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                    Transaksi Konsumen
-                </a>
+{{--                <a class="nav-link {{ Request::is('transaksi/konsumen*') ? 'active' : '' }}"--}}
+{{--                   href="{{ route('admin.transaksi.konsumen.index') }}">--}}
+{{--                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>--}}
+{{--                    Transaksi Konsumen--}}
+{{--                </a>--}}
 
 
                 <div class="sb-sidenav-menu-heading">Pengaturan</div>
