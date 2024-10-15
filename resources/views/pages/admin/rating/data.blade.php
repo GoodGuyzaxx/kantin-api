@@ -58,6 +58,9 @@
                                     <td class="text-center">{{ $rating->nama_menu }}</td>
                                     <td class="text-center">{{ $rating->rating }}</td>
                                     <td class="text-center">
+                                        <a href="" class="badge bg-warning"><i
+                                                class="fa-solid fa-pen-to-square"></i>
+                                        </a>
                                         <form action="{{route('admin.rating.delete', $rating->id)}}" method="POST"
                                             class="d-inline">
                                             @method('delete')

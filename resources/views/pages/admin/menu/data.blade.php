@@ -58,6 +58,9 @@
                                     <td class="text-center">Rp {{ number_format($menu->harga, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $menu->kategori }}</td>
                                     <td class="text-center">
+                                        <a href="" class="badge bg-warning"><i
+                                                class="fa-solid fa-pen-to-square"></i>
+                                        </a>
                                         <form action="{{route('admin.menu.delete', $menu->id_menu)}}" method="POST"
                                             class="d-inline">
                                             @method('delete')
