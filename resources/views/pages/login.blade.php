@@ -7,7 +7,7 @@
 @section('content')
     <!-- ======= main ======= -->
     <section class="my-login-page">
-        <div class="container form-Bg" style="margin-top: 200px">
+        <div class="container form-Bg">
             <div class="row justify-content-md-center">
                 <div class="card-wrapper">
                     <div class="card fat">
@@ -48,7 +48,13 @@
                                     <button type="submit" class="btn btn-primary btn-block">
                                         Login
                                     </button>
+
                                 </div>
+                                <a href="/" class="btn btn-secondary px-3 mb-2  mt-2 mb-lg-0 text-decoration-none">
+                                            <span class="d-flex align-items-center">
+                                                <span class="small">Home</span>
+                                            </span>
+                                </a>
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
