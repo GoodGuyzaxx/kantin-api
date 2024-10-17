@@ -5,6 +5,8 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class RatingController extends Controller
 {
@@ -42,9 +44,12 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(rating $rating)
+    public function show(rating $rating, $id)
     {
-        //
+        $data = Rating::join('konsumens', 'konsumens.id_konsumen', '=', 'ratings.id_konsumen')
+            ->where('ratings.id', $id)
+            ->firstOrFail();
+        return view('pages.admin.rating.edit', compact('data'));
     }
 
     /**
@@ -58,10 +63,33 @@ class RatingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, rating $rating)
+    public function update(Request $request, $id_rating)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        $data = [
+            'rating' => $request->input('rating'),
+        ];
+
+
+        $update = Rating::where('id', $id_rating)->update($data);
+
+//        \Log::info("Rating update: ID={$id_rating}, Saved={$update}");
+
+
+        if ($update) {
+            return redirect()->route('admin.rating.index')->with('success', 'Rating berhasil diperbarui!');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui rating!');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
