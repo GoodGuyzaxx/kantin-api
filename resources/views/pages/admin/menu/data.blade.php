@@ -45,6 +45,8 @@
                             <th>Nama Menu</th>
                             <th>Harga</th>
                             <th>Kategori</th>
+                            <th>Stock</th>
+                            <th>Gambar</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -57,8 +59,12 @@
                                     <td class="text-center">{{ $menu->nama_menu }}</td>
                                     <td class="text-center">Rp {{ number_format($menu->harga, 0, ',', '.') }}</td>
                                     <td class="text-center">{{ $menu->kategori }}</td>
+                                    <td class="text-center">{{ $menu->stock }}</td>
                                     <td class="text-center">
-                                        <a href="" class="badge bg-warning"><i
+                                        <img src="{{ asset('storage/gambar/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" style="max-width: 50px;">
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{route('admin.menu.show', $menu->id_menu)}}" class="badge bg-warning"><i
                                                 class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                         <form action="{{route('admin.menu.delete', $menu->id_menu)}}" method="POST"
