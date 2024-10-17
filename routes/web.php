@@ -63,6 +63,8 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
 
     //Menu
     route::get('/menu', [\App\Http\Controllers\web\MenuController::class, 'index'])->name('menu.index');
+    route::get('/menu/edit/{id}', [\App\Http\Controllers\web\MenuController::class, 'show'])->name('menu.show');
+    route::put('/menu/edit/{id}', [\App\Http\Controllers\web\MenuController::class, 'update'])->name('menu.update');
     route::delete('/menu/delete/{id}', [\App\Http\Controllers\web\MenuController::class, 'destroy'])->name('menu.delete');
 
     //Kategori
@@ -73,7 +75,8 @@ Route::group(['perfix' => 'admin','middleware' => ['auth:web'], 'as' => 'admin.'
 
     //Rating
     route::get('rating', [\App\Http\Controllers\web\RatingController::class, 'index'])->name('rating.index');
-    route::get('rating/data/{id}', [\App\Http\Controllers\web\RatingController::class, 'show'])->name('rating.show');
+    route::get('rating/edit/{id}', [\App\Http\Controllers\web\RatingController::class, 'show'])->name('rating.show');
+    route::put('rating/edit/{id}', [\App\Http\Controllers\web\RatingController::class, 'update'])->name('rating.update');
     route::delete('rating/data/{id}', [\App\Http\Controllers\web\RatingController::class, 'destroy'])->name('rating.delete');
 
     //Transaski
