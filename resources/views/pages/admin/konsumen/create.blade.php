@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid px-4 border-bottom">
-        <h1 class="mt-4 h2">Buat Akun Admin</h1>
+        <h1 class="mt-4 h2">Buat Akun Konsumen</h1>
     </div>
 
     <form class="col-lg-8 contianer-fluid px-4 mt-3" method="POST" action="{{ route('admin.konsumen.register') }}">
