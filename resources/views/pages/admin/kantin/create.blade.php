@@ -24,8 +24,12 @@
             <label for="id_admin" class="form-label">Daftar Admin</label>
             <select class="form-select @error('level') is-invalid @enderror" id="id_admin" name="id_admin" required>
                 <option value="" disabled selected>Choose One</option>
-                @foreach($kantins as $kantin)
-                    <option value="{{$kantin->id_admin}}" {{ old('id_admin') }}>{{$kantin->id_admin}}:{{$kantin->nama_admin}}</option>
+                @foreach($kantins as $admin)
+                    @if(!$admin->kantin)
+                        <option value="{{ $admin->id_admin }}" {{ old('id_admin') == $admin->id_admin ? 'selected' : '' }}>
+                            {{ $admin->nama_admin }}
+                        </option>
+                    @endif
                 @endforeach
             </select>
 
