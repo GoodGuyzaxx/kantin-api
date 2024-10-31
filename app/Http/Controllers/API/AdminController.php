@@ -71,13 +71,19 @@ class AdminController extends Controller
             ],400);
         }
 
+
         $admin = Auth::guard('user')->user();
+
+        $kantin = DB::table('kantins')
+            ->where('id_admin', $admin->id_admin)
+            ->first();
+
         return response([
             'success' => true,
             'message' => 'berhasil login',
             'status' => 'user',
             'data' => [
-                'id' => $admin->id_admin,
+                'id' => $kantin ? $kantin->id_kantin : null,
                 'nama_admin' => $admin->nama_admin,
                 'email' => $admin->email,
                 'no_telp' => $admin->no_telp

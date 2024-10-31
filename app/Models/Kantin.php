@@ -17,4 +17,9 @@ class Kantin extends Model
         'nama_kantin'
     ];
 
+    public function kantin()
+    {
+        return $this->hasOne(Kantin::class, 'id_admin', 'id_admin');
+    }
+
 }
