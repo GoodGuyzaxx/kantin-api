@@ -47,7 +47,6 @@
                             <th>Kategori</th>
                             <th>Stock</th>
                             <th>Gambar</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,18 +61,6 @@
                                     <td class="text-center">{{ $menu->stock }}</td>
                                     <td class="text-center">
                                         <img src="{{ asset('storage/gambar/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" style="max-width: 50px;">
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{route('admin.menu.show', $menu->id_menu)}}" class="badge bg-warning"><i
-                                                class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <form action="{{route('admin.menu.delete', $menu->id_menu)}}" method="POST"
-                                            class="d-inline">
-                                            @method('delete')
-                                            @csrf
-                                            <button class="badge bg-danger border-0 btnDelete" data-object="admins"><i
-                                                    class="fa-solid fa-trash-can"></i></button>
-                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

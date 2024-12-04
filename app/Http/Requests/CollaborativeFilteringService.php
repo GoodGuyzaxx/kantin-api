@@ -18,13 +18,11 @@ class CollaborativeFilteringService
         // Buat matriks konsumen-item
         $konsumenItemMatrix = [];
 
-//        Log::info("matrix first", $konsumenItemMatrix);
 
         foreach ($ratings as $rating) {
             $konsumenItemMatrix[$rating->id_konsumen][$rating->id_menu] = $rating->rating;
         }
 
-//        Log::info("matrix", $konsumenItemMatrix);
 
         // Periksa apakah konsumen saat ini memiliki rating
         if (!isset($konsumenItemMatrix[$rating->id_konsumen]) || empty($konsumenItemMatrix[$rating->id_konsumen])) {

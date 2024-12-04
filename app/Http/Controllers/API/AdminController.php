@@ -49,6 +49,8 @@ class AdminController extends Controller
 
         if ($request->expectsJson()) {
             return response()->json([
+                'success' => true,
+                'message' => 'Akun Berhasil Dibuat',
                 'data' => $tbAdmin
             ], 201);
         }
@@ -78,16 +80,25 @@ class AdminController extends Controller
             ->where('id_admin', $admin->id_admin)
             ->first();
 
-        return response([
-            'success' => true,
-            'message' => 'berhasil login',
-            'status' => 'user',
-            'data' => [
-                'id' => $kantin ? $kantin->id_kantin : null,
-                'nama_admin' => $admin->nama_admin,
-                'email' => $admin->email,
-                'no_telp' => $admin->no_telp
-            ]
-        ]);
+        $id_admin = $kantin ? $kantin->id_admin : null;
+
+        if (!$id_admin) {
+            return response()-> json([
+                'success' => false,
+                'message' => "Silakan Hubungi Admin Untuk Pendaftaran Kantin",
+            ],404);
+        } else {
+            return response([
+                'success' => true,
+                'message' => 'berhasil login',
+                'status' => 'user',
+                'data' => [
+                    'id' => $kantin->id_kantin,
+                    'nama_admin' => $admin->nama_admin,
+                    'email' => $admin->email,
+                    'no_telp' => $admin->no_telp
+                ]
+            ]);
+        }
     }
 }

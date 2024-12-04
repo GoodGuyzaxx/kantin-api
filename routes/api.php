@@ -42,6 +42,7 @@ Route::post('admin/register', [AdminController::class, 'register']);
 
 Route::get('rating', [RatingController::class, 'index']);
 Route::post('rating', [RatingController::class, 'store']);
+Route::get('rating/menu/{id_menu}', [RatingController::class, 'show']);
 Route::get('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'indexById']);
 Route::patch('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'updateRating']);
 

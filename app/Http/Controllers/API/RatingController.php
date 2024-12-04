@@ -52,9 +52,25 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Rating $rating)
+    public function show($id_menu)
     {
-        //
+        $rating = DB::table('ratings')
+            ->where('id_menu', $id_menu)
+            ->join('konsumens','konsumens.id_konsumen', '=', 'ratings.id_konsumen')
+            ->select('ratings.rating', 'konsumens.nama_konsumen', 'ratings.created_at','ratings.updated_at')
+            ->get();
+
+        if ($rating->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Rating Tidak Ditemukan',
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' =>$rating
+            ]);
+        }
     }
 
     /**
