@@ -24,9 +24,8 @@ use App\Http\Controllers\API\TransaksiController;
 */
 
 Route::get('ping',function(Request $request){
-    return response()->json([
-        'PONG'
-    ]);
+    return response()->json(
+        'PONG');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
