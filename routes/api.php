@@ -23,13 +23,17 @@ use App\Http\Controllers\API\TransaksiController;
 |
 */
 
+Route::get('ping',function(Request $request){
+    return response()->json([
+        'PONG'
+    ]);
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('ping', [
-    "PONG"
-]);
+
 
 //Login And Register
 Route::post('register', [AuthController::class, 'register']);
