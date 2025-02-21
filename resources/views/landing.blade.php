@@ -211,12 +211,46 @@
             </div>
         </div>
     </section>
+
+    <!-- Support Section -->
+    <section class="py-5" id="support">
+        <div class="container px-5">
+            <div class="text-center">
+                <h2 class="display-4 lh-1 mb-4">Butuh Bantuan?</h2>
+                <p class="lead fw-normal text-muted mb-5">Tim support kami siap membantu Anda 24/7</p>
+            </div>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-md-6 mb-5">
+                    <div class="text-center">
+                        <i class="bi-telephone icon-feature text-gradient d-block mb-3"></i>
+                        <h3 class="font-alt">Telepon</h3>
+                        <p class="text-muted mb-0">
+                            <a href="tel:+6281234567890" class="text-decoration-none">+62 812-0000-0000</a>
+                        </p>
+                        <p class="text-muted small">Senin - Jumat: 08.00 - 17.00 WIB</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <div class="text-center">
+                        <i class="bi-envelope icon-feature text-gradient d-block mb-3"></i>
+                        <h3 class="font-alt">Email</h3>
+                        <p class="text-muted mb-0">
+                            <a href="mailto:support@kantin.com" class="text-decoration-none">support@kantin.com</a>
+                        </p>
+                        <p class="text-muted small">Respon dalam 24 jam</p>
+                    </div>
+                </div>
+            </div>
+{{--            <div class="text-center mt-4">--}}
+{{--                <p class="text-muted">Anda juga dapat mengunjungi <a href="#" class="text-decoration-none">Pusat Bantuan</a> kami untuk informasi lebih lanjut</p>--}}
+{{--            </div>--}}
+        </div>
+    </section>
     <!-- Footer-->
     <footer class="bg-black text-center py-5">
         <div class="container px-5">
             <div class="text-white-50 small">
                 <div class="mb-2">&copy; Viktoria 2024. All Rights Reserved.</div>
-
             </div>
         </div>
     </footer>
