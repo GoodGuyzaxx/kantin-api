@@ -208,54 +208,54 @@ class TransaksiController extends Controller
 //
 //        return Excel::download(new TransaksiKantinExport($nama, $month), 'transaksi_kantin_' . $nama . '_' . now()->format('Y-m-d') . '.xlsx');
 //    }
-//
-//    public function exportTransaksiKantin(Request $request)
-//    {
-//        $kantinIdentifier = $request->route('nama');
-//        $month = $request->get('month');
-//
-//        Log::info('Export Parameters', [
-//            'kantinIdentifier' => $kantinIdentifier,
-//            'month' => $month
-//        ]);
-//
-//        $export = new TransaksiKantinExport($kantinIdentifier, $month);
-//
-//        $queryResult = $export->query()->get();
-//        Log::info('Query Result Count', ['count' => $queryResult->count()]);
-//
-//        if ($queryResult->isEmpty()) {
-//            Log::warning('No data found for export');
-//            return back()->with('error', 'Tidak ada data ditemukan untuk parameter yang ditentukan.');
-//        }
-//
-//        return Excel::download($export, 'transaksi_kantin_' . $kantinIdentifier . '_' . now()->format('Y-m-d') . '.xlsx');
-//    }
 
-    public function exportTransaksiKantin($id, Request $request)
+    public function exportTransaksiKantin(Request $request)
     {
-        try {
-            $query = Transaksi::where('transaksis.id_kantin', $id)
-                ->join('kantins', 'kantins.id_kantin', '=', 'transaksis.id_kantin')
-                ->select('transaksis.*', 'kantins.nama_kantin');
+        $kantinIdentifier = $request->route('nama');
+        $month = $request->get('month');
 
-            if ($request->filled('month')) {
-                $query->whereMonth('transaksis.created_at', $request->month);
-            }
+        Log::info('Export Parameters', [
+            'kantinIdentifier' => $kantinIdentifier,
+            'month' => $month
+        ]);
 
-            $data = $query->get();
-            $kantin = Kantin::where('id_kantin', $id)->first();
+        $export = new TransaksiKantinExport($kantinIdentifier, $month);
 
-            $fileName = 'Laporan_Transaksi_' . $kantin->nama_kantin;
-            if ($request->month) {
-                $fileName .= '_' . date('F_Y', mktime(0, 0, 0, $request->month, 1));
-            }
-            $fileName .= '.xlsx';
+        $queryResult = $export->query()->get();
+        Log::info('Query Result Count', ['count' => $queryResult->count()]);
 
-            return Excel::download(new TransaksiExport($data), $fileName);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Error mengexport data: ' . $e->getMessage());
+        if ($queryResult->isEmpty()) {
+            Log::warning('No data found for export');
+            return back()->with('error', 'Tidak ada data ditemukan untuk parameter yang ditentukan.');
         }
+
+        return Excel::download($export, 'transaksi_kantin_' . $kantinIdentifier . '_' . now()->format('Y-m-d') . '.xlsx');
     }
 
+//    public function exportTransaksiKantin($id, Request $request)
+//    {
+//        try {
+//            $query = Transaksi::where('transaksis.id_kantin', $id)
+//                ->join('kantins', 'kantins.id_kantin', '=', 'transaksis.id_kantin')
+//                ->select('transaksis.*', 'kantins.nama_kantin');
+//
+//            if ($request->filled('month')) {
+//                $query->whereMonth('transaksis.created_at', $request->month);
+//            }
+//
+//            $data = $query->get();
+//            $kantin = Kantin::where('id_kantin', $id)->first();
+//
+//            $fileName = 'Laporan_Transaksi_' . $kantin->nama_kantin;
+//            if ($request->month) {
+//                $fileName .= '_' . date('F_Y', mktime(0, 0, 0, $request->month, 1));
+//            }
+//            $fileName .= '.xlsx';
+//
+//            return Excel::download(new TransaksiExport($data), $fileName);
+//        } catch (\Exception $e) {
+//            return back()->with('error', 'Error mengexport data: ' . $e->getMessage());
+//        }
+//    }
+//
 }
