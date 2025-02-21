@@ -101,8 +101,8 @@ class RatingController extends Controller
     {
 
         $ratings = DB::table('ratings')
-            ->where('id_menu', $id_menu)
             ->where('id_konsumen', $id_konsumen)
+            ->where('id_menu', $id_menu)
             ->get();
 
         if ($ratings->isNotEmpty()){
@@ -152,4 +152,40 @@ class RatingController extends Controller
             ], 500);
         }
     }
+
+    public function getRatingStatus(Request $request){
+        // Validasi request
+        $request->validate([
+            'id_konsumen' => 'required|integer',
+            'id_menu' => 'required|integer',
+            'status_pesanan' => 'required|string|in:Diterima,Diproses,Dibatalkan,selesai',
+        ]);
+
+        // Ambil data berdasarkan parameter yang dikirim
+        $status = DB::table('ratings')
+            ->join('menus', 'ratings.id_menu', '=', 'menus.id_menu')
+            ->join('transaksis', 'menus.id_kantin', '=', 'transaksis.id_kantin')
+            ->where('ratings.id_konsumen', $request->id_konsumen)
+            ->where('ratings.id_menu', $request->id_menu)
+            ->where('transaksis.status_pesanan', $request->status_pesanan)
+            ->select('transaksis.status_pesanan')
+            ->select('transaksis.nama_konsumen')
+            ->first();
+
+        // Cek apakah data ditemukan
+        if ($status) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Status pesanan ditemukan',
+                'data' => $status
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan',
+                'data' => null
+            ], 404);
+        }
+    }
+
 }
