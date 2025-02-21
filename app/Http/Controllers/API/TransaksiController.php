@@ -353,4 +353,101 @@ class TransaksiController extends Controller
         }
     }
 
+    public function getTotalByMonth($id, Request $request)
+    {
+        try {
+            // Validate if month and year are provided, otherwise use current month and year
+            $month = $request->get('month', now()->month);
+            $year = $request->get('year', now()->year);
+
+            // Query to get only completed transactions for specific kantin
+            $transactions = Transaksi::where('id_kantin', $id)
+                ->where('status_pesanan', 'Selesai')
+                ->whereMonth('created_at', $month)
+                ->whereYear('created_at', $year)
+                ->get();
+
+            // Calculate totals for completed transactions
+            $totalAmount = $transactions->sum('total_harga');
+            $totalTransactions = $transactions->count();
+
+            // Group by payment type for completed transactions
+//            $paymentTypes = $transactions->groupBy('tipe_pembayaran')
+//                ->map(function ($group) {
+//                    return [
+//                        'count' => $group->count(),
+//                        'total' => $group->sum('total_harga')
+//                    ];
+//                });
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'month' => $month,
+                    'year' => $year,
+                    'total_amount' => $totalAmount,
+                    'total_transactions' => $totalTransactions,
+//                    'payment_types' => $paymentTypes,
+//                    'transactions' => $transactions->map(function ($transaction) {
+//                        return [
+//                            'id_order' => $transaction->id_order,
+//                            'total_harga' => $transaction->total_harga,
+//                            'menu' => $transaction->menu,
+//                            'jumlah' => $transaction->jumlah,
+//                            'tipe_pembayaran' => $transaction->tipe_pembayaran,
+//                            'tanggal' => $transaction->created_at->format('Y-m-d H:i:s')
+//                        ];
+//                    })
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving monthly transactions',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getRatingStatus($nama_konsumen,$status_pesanan)
+    {
+
+        $dataDB = DB::table('transaksis')
+            ->select('id_order', 'id_kantin', 'total_harga', 'menu','jumlah','status_pesanan' ,'tipe_pembayaran', 'status_pembayaran', 'email_konsumen', 'nama_konsumen','created_at')
+            ->where('nama_konsumen', $nama_konsumen)
+            ->where('status_pesanan', $status_pesanan)
+            ->get();
+
+        if ($dataDB->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data ditemukan'
+            ], 200);
+        } else {
+//            $groupedData = $dataDB->groupBy('id_order')->map(function ($group) {
+//                $firstItem = $group->first();
+//
+//                return [
+//                    'id_order' => $firstItem->id_order,
+//                    'id_kantin' => $firstItem->id_kantin,
+//                    'total_harga' => $firstItem->total_harga,
+//                    'tipe_pembayaran' => $firstItem->tipe_pembayaran,
+//                    'status_pembayaran' => $firstItem->status_pembayaran,
+//                    'email_konsumen' => $firstItem->email_konsumen,
+//                    'nama_konsumen' => $firstItem->nama_konsumen,
+//                    'created_at' => $firstItem->created_at,
+//                    'status_pesanan' => $firstItem->status_pesanan,
+//                ];
+//            })->values();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data ditemukan',
+//                'data' => $groupedData
+            ], 200);
+        }
+
+    }
+
 }
