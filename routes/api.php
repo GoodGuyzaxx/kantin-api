@@ -52,6 +52,8 @@ Route::post('rating', [RatingController::class, 'store']);
 Route::get('rating/menu/{id_menu}', [RatingController::class, 'show']);
 Route::get('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'indexById']);
 Route::patch('rating/{id_konsumen}/{id_menu}', [RatingController::class, 'updateRating']);
+Route::get('status/rating', [RatingController::class,'getRatingStatus' ]);
+Route::get('rating/status/order/{nama_konsumen}/{status_pesanan}', [TransaksiController::class, 'getRatingStatus']);
 
 Route::post('transaksi', [TransaksiController::class, 'store']);
 Route::get('transaksi/id/{id}', [TransaksiController::class, 'show']);
@@ -59,6 +61,7 @@ Route::get('transaksi/email/{email}', [TransaksiController::class, 'showByEmail'
 Route::get('transaksi/status/{id}/{status}', [TransaksiController::class, 'showByIdStatus']);
 Route::get('transaksi/kantin/{id}', [TransaksiController::class, 'getTotalHargaByKantin']);
 Route::patch('transaksi/id/{id}', [TransaksiController::class, 'updateStatus']);
+Route::get('transaksi/month/{id}/', [TransaksiController::class, 'getTotalByMonth']);
 
 Route::get('kantin', [KantinController::class, 'index']);
 
