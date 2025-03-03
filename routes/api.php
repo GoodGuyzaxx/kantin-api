@@ -64,6 +64,7 @@ Route::patch('transaksi/id/{id}', [TransaksiController::class, 'updateStatus']);
 Route::get('transaksi/month/{id}/', [TransaksiController::class, 'getTotalByMonth']);
 
 Route::get('kantin', [KantinController::class, 'index']);
+route::post('kantin/register', [kantinController::class, 'store']);
 
 Route::get('orders/{email}', [OrderPaymentController::class, 'getByEmail']);
 Route::get('order/id/{id}', [OrderPaymentController::class, 'showOrderId']);
