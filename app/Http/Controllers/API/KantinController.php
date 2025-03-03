@@ -8,6 +8,7 @@ use App\Models\Kantin;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\error;
 
 class KantinController extends Controller
 {
@@ -34,12 +35,32 @@ class KantinController extends Controller
 
     }
 
-    public function store(Request $request){
-        $dataRequest = $request->all();
-        $validate = Validator::make($dataRequest, [
-           'id_admin' => 'required',
-           'nama_kantin' => 'required',
+    public function store(Request $request)
+    {
+        $validate = $request->validate([
+            'nama_kantin' => 'required',
+            'id_admin' => 'required',
+        ]);
 
+        // Check if admin exists in Admin model
+        $adminExists = Admin::where('id_admin', $request->id_admin)->exists();
+
+        if (!$adminExists) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Admin tidak ditemukan'
+            ]);
+        }
+
+        // If admin exists, proceed with storing data
+        $kantin = new Kantin();
+        $kantin->nama_kantin = $request->nama_kantin;
+        $kantin->id_admin = $request->id_admin;
+        $kantin->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $kantin
         ]);
     }
 
