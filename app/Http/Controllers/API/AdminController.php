@@ -51,7 +51,12 @@ class AdminController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Akun Berhasil Dibuat',
-                'data' => $tbAdmin
+                'data' => [
+                    'id_admin' => $tbAdmin->id_admin,
+                    'nama_admin' => $tbAdmin->nama_admin,
+                    'email' => $tbAdmin->email,
+                    'no_telp' => $tbAdmin->no_telp
+                ]
             ], 201);
         }
 
@@ -86,7 +91,7 @@ class AdminController extends Controller
             return response()-> json([
                 'success' => false,
                 'message' => "Silakan Hubungi Admin Untuk Pendaftaran Kantin",
-            ],404);
+            ],);
         } else {
             return response([
                 'success' => true,
