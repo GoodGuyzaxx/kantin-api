@@ -91,7 +91,14 @@ class AdminController extends Controller
             return response()-> json([
                 'success' => false,
                 'message' => "Silakan Hubungi Admin Untuk Pendaftaran Kantin",
-            ],);
+                'status' => 'user',
+                'data' => [
+                    'id' => $admin->id_admin,
+                    'nama_admin' => $admin->nama_admin,
+                    'email' => $admin->email,
+                    'no_telp' => $admin->no_telp
+                ]
+            ]);
         } else {
             return response([
                 'success' => true,
